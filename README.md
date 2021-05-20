@@ -47,7 +47,7 @@ add description of the website
 
 ### Wireframes
 
-- Wireframes for this project are available [here]().
+- Wireframes for this project are available [here](wireframe/bg-score.png).
 
 <br>
 <br>
