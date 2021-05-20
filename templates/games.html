@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h1>Games</h1>
+  {% for game in games %} 
+    <p>{{ game.boardgame }} </p>
+    <p>{{ game.game_date }} </p>
+    <p>{{ game.created_by }} </p>
+    <p>{{ game.players_scores }} </p>
+  {% endfor %}
+
+{% endblock %}
