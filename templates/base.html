@@ -17,14 +17,61 @@
       type="text/css"
     />
     <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/style.css') }}"
-    type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+      type="text/css"
     />
-    {% block styles %}
+    {% block styles %} 
     {% endblock %}
     <title>BG scores</title>
   </head>
+  <header>
+    <!-- Dropdown Structure -->
+    <ul id="dropdown1" class="dropdown-content">
+      <li class="divider"></li>
+      <li><a href="#!" class="waves-effect">Logout</a></li>
+    </ul>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo left">Logo</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger right"
+          ><i class="fas fa-bars"
+            ><span class="sr-only">mobile hamburger icon</span></i
+          ></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#" class="waves-effect">Home</a></li>
+          <li><a href="#" class="waves-effect">Play a Game</a></li>
+          <li><a href="#" class="waves-effect">Manage Board Games</a></li>
+          <li><a href="#" class="waves-effect">Manage Players</a></li>
+          <!-- Dropdown Trigger -->
+          <li>
+            <a class="dropdown-trigger waves-effect" href="#!" data-target="dropdown1"
+              >Hi, gladyskate!<i class="fas fa-caret-down"
+                ><span class="sr-only">dropdown icon</span></i
+              ></a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img src="" alt="">
+          </div>
+          <h4>Hi, gladyskate!</h4>
+        </div>
+      </li>
+      <li><div class="divider"></div></li>
+      <li><a href="#" class="waves-effect">Home</a></li>
+      <li><a href="#" class="waves-effect">Play a Game</a></li>
+      <li><a href="#" class="waves-effect">Manage Board Games</a></li>
+      <li><a href="#" class="waves-effect">Manage Players</a></li>
+      <li><a href="#" class="waves-effect">Logout</a></li>
+    </ul>
+  </header>
   <body>
     {% block content %} 
     {% endblock %}
@@ -35,7 +82,7 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    {% block scripts %}
+    {% block scripts %} 
     {% endblock %}
   </body>
 </html>
