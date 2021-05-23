@@ -62,7 +62,7 @@ nav ul a:hover {
 .logo img:hover {
   animation-name: logo-bounce-animation;
   animation-duration: 1s;
-}z
+}
 
 .header-links {
   height: 100px;
