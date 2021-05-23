@@ -33,7 +33,7 @@
     </ul>
     <nav>
       <div class="nav-wrapper teal lighten-2">
-        <a href="#!" class="brand-logo left logo">
+        <a href="{{ url_for('get_games') }}" class="brand-logo left logo">
           <img src="../static/assets/bg-scores.png" alt="Logo of BG scores">
         </a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger right hamburger"
@@ -42,10 +42,10 @@
           ></a
         >
         <ul class="right hide-on-med-and-down header-links">
-          <li><a href="#" class="">Home</a></li>
-          <li><a href="#" class="">Play a Game</a></li>
-          <li><a href="#" class="">Manage Board Games</a></li>
-          <li><a href="#" class="">Manage Players</a></li>
+          <li><a href="{{ url_for('get_games') }}">Home</a></li>
+          <li><a href="#">Play a Game</a></li>
+          <li><a href="#">Manage Board Games</a></li>
+          <li><a href="#">Manage Players</a></li>
           <!-- Dropdown Trigger -->
           <li>
             <a class="dropdown-trigger username" href="#!" data-target="dropdown1"
@@ -67,11 +67,11 @@
         </div>
       </li>
       <li><div class="divider teal lighten-2"></div></li>
-      <li><a href="#" class="">Home</a></li>
-      <li><a href="#" class="">Play a Game</a></li>
-      <li><a href="#" class="">Manage Board Games</a></li>
-      <li><a href="#" class="">Manage Players</a></li>
-      <li><a href="#" class="">Logout</a></li>
+      <li><a href="{{ url_for('get_games') }}">Home</a></li>
+      <li><a href="#">Play a Game</a></li>
+      <li><a href="#">Manage Board Games</a></li>
+      <li><a href="#">Manage Players</a></li>
+      <li><a href="#">Logout</a></li>
     </ul>
   </header>
   <body>
