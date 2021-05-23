@@ -43,7 +43,7 @@ add description of the website
     -
 
   - #### Animations
-    - 
+    - logo-bounce-animation: When there is a hover on the logo, logo-bounce-animation is applied to let the user know that the logo is a clickable link. The logo-bounce-animation adds some fun to the website.
 
 ### Wireframes
 
