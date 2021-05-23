@@ -1,3 +1,52 @@
-.sr-only{
+/* General */
+.sr-only {
   display: none;
+}
+
+.fa-icon {
+  padding-left: 8px;
+}
+
+/* Navbar */
+nav {
+  height: 100px;
+}
+
+nav ul a {
+  font-size: large;
+}
+
+nav ul a:hover {
+  border-radius: 8px;
+  color: rgb(78, 75, 75);
+}
+
+.logo {
+  width: 100px;
+}
+
+.logo img {
+  max-width: 100%;
+}
+
+.header-links {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  padding-top: 20px;
+}
+
+.username {
+  display: flex;
+}
+
+.sidenav, .sidenav li a, .divider{
+  color: rgb(78, 75, 75);
+}
+
+.sidenav li>a:hover{
+ color: white;
 }
