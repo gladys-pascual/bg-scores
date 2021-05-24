@@ -87,3 +87,36 @@ nav ul a:hover {
 .sidenav li > a:hover {
   color: white;
 }
+
+/* Register and Log In*/
+.register-login-form{
+  padding-top: 10vh;
+}
+
+.register-login-heading{
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 300;
+}
+
+.input-field .prefix{
+  padding-top: 8px;
+  font-size: 1.5rem;
+}
+
+input[type=text]:not(.browser-default){
+  border-bottom: 1px solid white;
+}
+
+.submit-btn{
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn-text{
+  letter-spacing: 2px;
+}
+
+.register-icon{
+  padding-left: 8px;
+}
