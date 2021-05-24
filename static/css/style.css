@@ -37,6 +37,13 @@
   padding-left: 8px;
 }
 
+/* Flash messages */
+.flashes h5{
+  line-height: 2;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
 /* Navbar */
 nav {
   height: 100px;

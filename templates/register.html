@@ -2,8 +2,8 @@
 {% block content %}
 
   <div class="row register-login-form">
-    <h4 class="col s10 offset-s1 m6 offset-m4 l4 offset-l4 teal-text lighten-2 register-login-heading">Register</h4>
-    <form class="col s10 offset-s1 m6 offset-m4 l4 offset-l4" method="POST" action="{{ url_for('register') }}">
+    <h4 class="col s10 offset-s1 m8 offset-m2 l6 offset-l3 teal-text lighten-2 register-login-heading">Register</h4>
+    <form class="col s10 offset-s1 m8 offset-m2 l6 offset-l3 " method="POST" action="{{ url_for('register') }}">
       <div class="card-panel teal lighten-3">
         <!-- Username -->
         <div class="row">
@@ -13,7 +13,7 @@
               id="username"
               name="username" 
               type="text"
-              minlength="5"
+              minlength="3"
               maxlength="15"
               pattern="^[a-zA-Z0-9]{5,15}$"
               class="validate"
@@ -29,7 +29,7 @@
             <input
               id="password"
               name="password" 
-              type="text"
+              type="password"
               minlength="5"
               maxlength="15"
               pattern="^[a-zA-Z0-9]{5,15}$"
@@ -41,7 +41,7 @@
         </div>
         <!-- Submit -->
         <div class="row">
-          <button type="submit" class="col s4 offset-s8 btn-small submit-btn">
+          <button type="submit" class="col s6 offset-s6 l5 offset-l7 l4 offset-l6 btn-small submit-btn">
             <span class="submit-btn-text">Register</span><i class="fas fa-sign-in-alt register-icon"></i>
           </button>
         </div>
