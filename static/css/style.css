@@ -44,6 +44,10 @@
   font-weight: 300;
 }
 
+.flashes{
+  margin-bottom: 0px;
+}
+
 /* Navbar */
 nav {
   height: 100px;
@@ -97,7 +101,7 @@ nav ul a:hover {
 
 /* Register and Log In*/
 .register-login-form{
-  padding-top: 10vh;
+  padding-top: 8vh;
 }
 
 .register-login-heading{
@@ -111,8 +115,12 @@ nav ul a:hover {
   font-size: 1.5rem;
 }
 
-input[type=text]:not(.browser-default){
+input[type=text]:not(.browser-default) {
   border-bottom: 1px solid white;
+}
+
+#username, #password {
+  color: white;
 }
 
 .submit-btn{
