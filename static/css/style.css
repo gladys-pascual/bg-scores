@@ -89,6 +89,15 @@ nav ul a:hover {
   display: flex;
 }
 
+/* Line 93 to 99 removes border after hover */
+a:-webkit-any-link:focus-visible {
+  outline-offset: none;
+}
+
+:focus-visible {
+  outline: none;
+}
+
 .sidenav,
 .sidenav li a,
 .divider {
@@ -97,6 +106,12 @@ nav ul a:hover {
 
 .sidenav li > a:hover {
   color: white;
+}
+
+.username-sidenav{
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 300;
 }
 
 /* Register and Log In*/
