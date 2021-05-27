@@ -37,6 +37,17 @@
   padding-left: 8px;
 }
 
+/* Flash messages */
+.flashes h5{
+  line-height: 2;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+.flashes{
+  margin-bottom: 0px;
+}
+
 /* Navbar */
 nav {
   height: 100px;
@@ -78,10 +89,64 @@ nav ul a:hover {
   display: flex;
 }
 
-.sidenav, .sidenav li a, .divider{
+/* Line 93 to 99 removes border after hover */
+a:-webkit-any-link:focus-visible {
+  outline-offset: none;
+}
+
+:focus-visible {
+  outline: none;
+}
+
+.sidenav,
+.sidenav li a,
+.divider {
   color: rgb(78, 75, 75);
 }
 
-.sidenav li>a:hover{
- color: white;
+.sidenav li > a:hover {
+  color: white;
+}
+
+.username-sidenav{
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+/* Register and Log In*/
+.register-login-form{
+  padding-top: 8vh;
+}
+
+.register-login-heading{
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 300;
+}
+
+.input-field .prefix{
+  padding-top: 8px;
+  font-size: 1.5rem;
+}
+
+input[type=text]:not(.browser-default) {
+  border-bottom: 1px solid white;
+}
+
+#username, #password {
+  color: white;
+}
+
+.submit-btn{
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn-text{
+  letter-spacing: 2px;
+}
+
+.register-icon{
+  padding-left: 8px;
 }

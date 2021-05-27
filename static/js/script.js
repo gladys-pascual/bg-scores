@@ -1,4 +1,4 @@
 $(document).ready(function(){
-  $(".dropdown-trigger").dropdown({coverTrigger: false});
+  $(".dropdown-trigger").dropdown({coverTrigger: false, hover: true});
   $('.sidenav').sidenav({edge: "right"});
 });

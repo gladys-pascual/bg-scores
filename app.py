@@ -3,6 +3,7 @@ from flask import (Flask, flash, render_template,
                    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
 
@@ -22,7 +23,66 @@ mongo = PyMongo(app)
 @app.route("/get_games")
 def get_games():
     games = mongo.db.games.find()
-    return render_template("games.html", games=games)
+    user = "ginnoginno"
+    return render_template("games.html", games=games, user=user)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        # Check if username already exists in the database
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+        if existing_user:
+            flash("Username already exists, please try a new one.")
+            return redirect(url_for("register"))
+
+        register = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(request.form.get("password"))
+        }
+        mongo.db.users.insert_one(register)
+
+        # Put the new user into 'session' cookie
+        session["user"] = request.form.get("username").lower()
+        flash("Registration was successful!")
+        return render_template("login.html")
+
+    return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # Check if username exists in the database
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+        
+        if existing_user:
+            # ensure hashed password matches user input
+            if check_password_hash(
+                existing_user["password"], request.form.get("password")):
+                    session["user"] = request.form.get("username").lower()
+                    return redirect(url_for("get_games"))
+            else:
+                # Invalid passordmatch
+                flash("Invalid username and/or password.")
+                return redirect(url_for("login"))
+
+        else:
+            # Username doesn't exist
+            flash("Incorrect username and/or password.")
+            return redirect(url_for("login"))
+    
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    # remove user from session cookies
+    flash("You have been logged out.")
+    session.pop("user")
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
