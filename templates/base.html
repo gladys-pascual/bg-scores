@@ -36,14 +36,13 @@
           <a href="{{ url_for('get_games') }}" class="brand-logo left logo">
             <img src="../static/assets/bg-scores.png" alt="Logo of BG scores" />
           </a>
-          <a
-            href="#"
-            data-target="mobile-demo"
-            class="sidenav-trigger right hamburger"
-            ><i class="fas fa-bars"
-              ><span class="sr-only">mobile hamburger icon</span></i
-            ></a
-          >
+          {% if session.user %}
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger right hamburger">
+              <i class="fas fa-bars">
+                <span class="sr-only">mobile hamburger icon</span>
+              </i>
+            </a>
+          {% endif %}
           {% if session.user %}
             <ul class="right hide-on-med-and-down header-links">
               <li><a href="{{ url_for('get_games') }}">Home</a></li>
@@ -65,24 +64,26 @@
           {% endif %}
         </div>
       </nav>
-      <ul class="sidenav teal lighten-4" id="mobile-demo">
-        <li>
-          <div class="user-view">
-            <div class="background">
-              <img src="" alt="" />
+      {% if session.user %}
+        <ul class="sidenav teal lighten-4" id="mobile-demo">
+          <li>
+            <div class="user-view">
+              <div class="background">
+                <img src="" alt="" />
+              </div>
+              <h5 class="username-sidenav">
+                Hi {{ user }} <i class="far fa-user-circle"><span class="sr-only">user icon</span></i>
+              </h5>
             </div>
-            <h5 class="username-sidenav">
-              Hi {{ user }} <i class="far fa-user-circle"><span class="sr-only">user icon</span></i>
-            </h5>
-          </div>
-        </li>
-        <li><div class="divider teal lighten-2"></div></li>
-        <li><a href="{{ url_for('get_games') }}">Home</a></li>
-        <li><a href="#">Play a Game</a></li>
-        <li><a href="#">Manage Board Games</a></li>
-        <li><a href="#">Manage Players</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
-      </ul>
+          </li>
+          <li><div class="divider teal lighten-2"></div></li>
+          <li><a href="{{ url_for('get_games') }}">Home</a></li>
+          <li><a href="#">Play a Game</a></li>
+          <li><a href="#">Manage Board Games</a></li>
+          <li><a href="#">Manage Players</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      {% endif %}
     </header>
 
     <section>
