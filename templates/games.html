@@ -3,6 +3,14 @@
 
   <h1>Games</h1>
   {% for game in games %} 
+  <div class="row">
+    <div class="col s12 m5">
+      <div class="card-panel">
+        <h4>{{ game.boardgame }} </h4>
+      </div>
+    </div>
+  </div>
+
     <p>{{ game.boardgame }} </p>
     <p>{{ game.game_date }} </p>
     <p>{{ game.created_by }} </p>
