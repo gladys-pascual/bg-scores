@@ -1,20 +1,29 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
 
   <h1>Games</h1>
-  {% for game in games %} 
-  <div class="row">
-    <div class="col s12 m5">
-      <div class="card-panel">
-        <h4>{{ game.boardgame }} </h4>
+  {% for game in games %}
+    <div class="row">
+      <div class="col s12 m5">
+        <div class="card-panel">
+          <h4>{{ game.boardgame }}</h4>
+          {% for player in players %} 
+            {% for game_player_id in game.players_scores %} 
+              {% if player._id == game_player_id %}
+               <p> {{ player.player }} </p>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
       </div>
     </div>
-  </div>
 
-    <p>{{ game.boardgame }} </p>
-    <p>{{ game.game_date }} </p>
-    <p>{{ game.created_by }} </p>
-    <p>{{ game.players_scores }} </p>
-  {% endfor %}
+    <p>{{ game.boardgame }}</p>
+    <p>{{ game.game_date }}</p>
+    <p>{{ game.created_by }}</p>
+    <p>{{ game.players_scores }}</p>
+
+  {% endfor %} 
 
 {% endblock %}
+

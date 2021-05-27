@@ -23,8 +23,15 @@ mongo = PyMongo(app)
 @app.route("/get_games")
 def get_games():
     games = mongo.db.games.find()
+    players = mongo.db.players.find()
     user = "ginnoginno"
-    return render_template("games.html", games=games, user=user)
+    def mapPlayer(p):
+        updated_player = {
+            "_id": str(p["_id"]),
+            "player": p["player"]
+        }
+        return updated_player
+    return render_template("games.html", games=games, players=map(mapPlayer, players), user=user)
 
 
 @app.route("/register", methods=["GET", "POST"])
