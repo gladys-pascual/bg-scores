@@ -22,16 +22,34 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_games")
 def get_games():
+
     games = mongo.db.games.find()
-    players = mongo.db.players.find()
-    user = "ginnoginno"
+
+    # Function to transform from DB format of 
+    # players collection to ideal template
     def mapPlayer(p):
         updated_player = {
             "_id": str(p["_id"]),
             "player": p["player"]
         }
         return updated_player
-    return render_template("games.html", games=games, players=map(mapPlayer, players), user=user)
+    
+    players = mongo.db.players.find()
+
+    # Function to transform from DB format of 
+    # boardgames collection to ideal template
+    def mapBoardgame(bg):
+        updated_boardgame = {
+            "_id": str(bg["_id"]),
+            "boardgame": bg["boardgame"]
+        }
+        return updated_boardgame
+    
+    boardgames = mongo.db.boardgames.find()
+
+    user = "ginnoginno"
+    return render_template("games.html", 
+        games=games, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames), user=user)
 
 
 @app.route("/register", methods=["GET", "POST"])
