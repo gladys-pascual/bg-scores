@@ -17,6 +17,8 @@ add description of the website
 
 - As a user, I want to be able to create an account.
 - As a user, I want to be able to log in and out of my account.
+  - Log in:
+    - Once the page is loaded, it checks if session cookie has something in it. If it's empty, it loads login. If it has something, it loads get_games
 - As a user, I want to be able to record the games that I played, by
     - Adding a board game from a list of pre-added board games.
     - Seeing a list of all my board games

@@ -21,7 +21,8 @@
       href="{{ url_for('static', filename='css/style.css') }}"
       type="text/css"
     />
-    {% block styles %} {% endblock %}
+    {% block styles %} 
+    {% endblock %}
     <title>BG scores</title>
   </head>
   <body>
@@ -46,7 +47,7 @@
           {% if session.user %}
             <ul class="right hide-on-med-and-down header-links">
               <li><a href="{{ url_for('get_games') }}">Home</a></li>
-              <li><a href="#">Play a Game</a></li>
+              <!-- <li><a href="{{ url_for('add_game') }}">Play a Game</a></li> -->
               <li><a href="#">Manage Board Games</a></li>
               <li><a href="#">Manage Players</a></li>
               <!-- Dropdown Trigger -->
@@ -55,7 +56,7 @@
                   class="dropdown-trigger username"
                   href="#!"
                   data-target="dropdown1"
-                  >Hi, {{ user }}!<i class="fas fa-caret-down fa-icon"
+                  >Hi, {{ session.user }}!<i class="fas fa-caret-down fa-icon"
                     ><span class="sr-only">dropdown icon</span></i
                   ></a
                 >
@@ -72,13 +73,13 @@
                 <img src="" alt="" />
               </div>
               <h5 class="username-sidenav">
-                Hi {{ user }} <i class="far fa-user-circle"><span class="sr-only">user icon</span></i>
+                Hi {{ session.user }} <i class="far fa-user-circle"><span class="sr-only">user icon</span></i>
               </h5>
             </div>
           </li>
           <li><div class="divider teal lighten-2"></div></li>
           <li><a href="{{ url_for('get_games') }}">Home</a></li>
-          <li><a href="#">Play a Game</a></li>
+          <!-- <li><a href="{{ url_for('add_game') }}">Play a Game</a></li> -->
           <li><a href="#">Manage Board Games</a></li>
           <li><a href="#">Manage Players</a></li>
           <li><a href="{{ url_for('logout') }}">Logout</a></li>
@@ -88,15 +89,21 @@
 
     <section>
       <!-- Flash messages -->
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %}
-      <div class="row flashes">
-        <h5 class="teal lighten-3 center-align white-text">{{ message }}</h5>
-      </div>
-      {% endfor %} {% endif %} {% endwith %}
+      {% with messages = get_flashed_messages() %} 
+        {% if messages %} 
+          {% for message in messages %}
+          <div class="row flashes">
+            <h5 class="teal lighten-3 center-align white-text">{{ message }}</h5>
+          </div>
+          {% endfor %} 
+        {% endif %} 
+      {% endwith %}
     </section>
 
-    <main class="container">{% block content %} {% endblock %}</main>
+    <main class="container">
+      {% block content %} 
+      {% endblock %}
+    </main>
 
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
