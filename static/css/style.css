@@ -150,3 +150,17 @@ input[type=text]:not(.browser-default) {
 .register-icon{
   padding-left: 8px;
 }
+
+/* Games.html */
+.card-header{
+ display:flex;
+ justify-content: space-between;
+}
+
+.card-header p{
+  margin: 0px;
+}
+
+.player-gap{
+  padding-right: 8px;
+}
