@@ -37,6 +37,29 @@
   padding-left: 8px;
 }
 
+.modal-button-wrapper{
+  display:flex;
+  margin: 5vh;
+  justify-content: center;
+}
+
+.modal-button-icon{
+  padding-left: 8px;
+}
+
+.modal-button{
+  font-weight: 300;
+  font-size: medium;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.modal-button:hover{
+  color:black;
+  box-shadow: 0px 0px 8px black;
+}
+
 /* Flash messages */
 .flashes h5{
   line-height: 2;
@@ -47,6 +70,7 @@
 .flashes{
   margin-bottom: 0px;
 }
+
 
 /* Navbar */
 nav {
@@ -161,6 +185,18 @@ input[type=text]:not(.browser-default) {
   margin: 0px;
 }
 
+.board-game-heading{
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
+
 .player-gap{
-  padding-right: 8px;
+  padding-left: 4px;
+}
+
+.player-and-score{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5vw;
 }

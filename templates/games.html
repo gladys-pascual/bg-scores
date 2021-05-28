@@ -1,38 +1,59 @@
 {% extends "base.html" %} 
 {% block content %}
-
-  <h1>Games</h1>
+  <!-- Modal Trigger -->
+  <div class="modal-button-wrapper">
+    <a class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" href="#add_game">Add your game <i class="fas fa-gamepad modal-button-icon"><span class="sr-only">game icon</span></i></a>
+  </div>
   {% for game in games %}
     <div class="row">
-      <div class="col s12 m5">
-        <div class="card-panel">
-          <div class="card-header">
-            <p>day</p>
-            <p>{{ game.game_date }}</p>
-          </div>
-          {% for boardgame in boardgames %}
-            {% if boardgame._id == game.boardgame%}
-             <h4>{{ boardgame.boardgame }}</h4>
-            {% endif %}
-          {% endfor %}
-          {% for player in players %} 
-            {% for game_player_info in game.players_scores %} 
-              {% if player._id == game_player_info.player %}
-               <span> {{ player.player }} </span>
-               {% if game_player_info.isWinner %}
-                <span  class="player-gap">
-                  <i class="fas fa-trophy yellow-text"><span class="sr-only">trophy icon</span></i>
-                </span>
-                {% else %}
-                <span class="player-gap"></span>
-               {% endif %}
+        <div class="col s12 m8 l5">
+          <div class="card-panel">
+            <div class="card-header">
+              <p>day</p>
+              <p>{{ game.game_date }}</p>
+            </div>
+            {% for boardgame in boardgames %}
+              {% if boardgame._id == game.boardgame%}
+              <h4 class="board-game-heading center">{{ boardgame.boardgame }}</h4>
               {% endif %}
             {% endfor %}
-          {% endfor %}
+            {% for player in players %} 
+              {% for game_player_info in game.players_scores %} 
+                {% if player._id == game_player_info.player %}
+                <p class="player-and-score"> 
+                  <span>
+                    {{ player.player }} 
+                    {% if game_player_info.isWinner %}
+                      <span  class="player-gap">
+                        <i class="fas fa-trophy orange-text"><span class="sr-only">trophy icon</span></i>
+                      </span>
+                    {% endif %}
+                  </span>
+                  <span>
+                    {{ game_player_info.score}}
+                  </span>
+                </p>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          </div>
         </div>
-      </div>
     </div>
     
   {% endfor %} 
-{% endblock %}
 
+  
+
+ 
+  <!-- Add Game Modal -->
+  <div id="add_game" class="modal">
+    <div class="modal-content">
+      <h2>add game</h2>
+    </div>
+    <div class="modal-footer">
+      <a href="{{ url_for('add_game') }}" class="modal-close waves-effect waves-green btn-flat">Submit</a>
+    </div>
+  </div>
+
+
+{% endblock %}
