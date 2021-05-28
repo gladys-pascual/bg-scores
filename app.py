@@ -22,35 +22,36 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_games")
 def get_games():
+    if session:
+        #  Getting games collection from database
+        games = mongo.db.games.find()
 
-    games = mongo.db.games.find()
+        # Function to transform from DB format of 
+        # players collection to ideal template
+        def mapPlayer(p):
+            updated_player = {
+                "_id": str(p["_id"]),
+                "player": p["player"]
+            }
+            return updated_player
+        # Getting players collection from database
+        players = mongo.db.players.find()
 
-    # Function to transform from DB format of 
-    # players collection to ideal template
-    def mapPlayer(p):
-        updated_player = {
-            "_id": str(p["_id"]),
-            "player": p["player"]
-        }
-        return updated_player
-    
-    players = mongo.db.players.find()
+        # Function to transform from DB format of 
+        # boardgames collection to ideal template
+        def mapBoardgame(bg):
+            updated_boardgame = {
+                "_id": str(bg["_id"]),
+                "boardgame": bg["boardgame"]
+            }
+            return updated_boardgame
+        # Getting boardgames collection from database
+        boardgames = mongo.db.boardgames.find()
 
-    # Function to transform from DB format of 
-    # boardgames collection to ideal template
-    def mapBoardgame(bg):
-        updated_boardgame = {
-            "_id": str(bg["_id"]),
-            "boardgame": bg["boardgame"]
-        }
-        return updated_boardgame
-    
-    boardgames = mongo.db.boardgames.find()
-
-    user = "ginnoginno"
-    return render_template("games.html", 
-        games=games, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames), user=user)
-
+        return render_template("games.html", 
+            games=games, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+    else:
+        return render_template("login.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -108,6 +109,16 @@ def logout():
     flash("You have been logged out.")
     session.pop("user")
     return redirect(url_for("login"))
+
+
+@app.route("/add_game", methods=["GET", "POST"])
+def add_game():
+    return redirect(url_for("get_games"))
+
+
+@app.route("/edit_game", methods=["GET", "POST"])
+def edit_game():
+    return redirect(url_for("get_games"))
 
 
 if __name__ == "__main__":
