@@ -2,40 +2,100 @@
 {% block content %}
   <!-- Modal Trigger -->
   <div class="modal-button-wrapper">
-    <a class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" href="#add_game">Add your game <i class="fas fa-gamepad modal-button-icon"><span class="sr-only">game icon</span></i></a>
+    <button class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" data-target="add_game">Add a game <i class="fas fa-gamepad modal-button-icon"><span class="sr-only">game icon</span></i></button>
+  </div>
+  <!-- Add Game Modal -->
+  <div id="add_game" class="modal">
+    <div class="modal-content">
+      <form class="col s8 offset-s2" action="">
+        <h3>Add a game</h3>
+        <!-- Choose a boardgame  -->
+        <div class="row">
+          <div class="input-field col s10 offset-s1">
+            <select id="boardgame" name="boardgame" class="validate" required>
+              <option value="" disabled selected>Choose a boardgame</option>
+              {% for boardgame in boardgames %}
+                <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
+              {% endfor %}
+            </select>
+            <label for="boardgame" >Boardgame</label>
+          </div>  
+        </div>
+
+        <!-- date picker -->
+        <div class="row">
+          <div class="input-field col s10 offset-s1">
+            <i class="fas fa-calendar-alt prefix"></i>
+            <input
+              id="game_date"
+              name="game_date"
+              class="datepicker validate"
+              required
+            ></input>
+            <label for="game_date">Game Date</label>
+          </div>
+        </div>
+
+        <!-- Choose a player  --> 
+        <div class="row player-score">
+          <div>
+            <div class="input-field col s5 offset-s1">
+              <select id="boardgame" name="boardgame" class="validate" required>
+                <option value="" disabled selected>Choose a player</option>
+                {% for player in players %}
+                  <option value="{{ player._id }}">{{ player.player }}</option>
+                {% endfor %}
+              </select>
+              <label for="player" >Player</label>
+            </div>  
+            <div class="input-field col s4 offset-s7">
+              <input type="text" class="validate" required>
+              <label for="score">Score</label>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a href="{{ url_for('get_games') }}" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
+      <a href="{{ url_for('add_game') }}" class="modal-close waves-effect waves-light btn-flat">Submit</a>
+    </div>
   </div>
   {% for game in games %}
     <div class="row">
         <div class="col s10 offset-s1 m8 offset-m2 l6 offset-m3">
           <div class="card-panel">
             <div class="card-header">
-              <p>day</p>
-              <p>{{ game.game_date }}</p>
+              <p class="game-date">{{ game.game_date }}</p>
+              <div class="edit-delete-button">
+                <a href="#" class="waves-effect waves-light btn-small edit-btn teal lighten-3"><i class="fas fa-edit edit-icon"></i></a>
+                <a href="#" class="waves-effect waves-light btn-small delete-btn teal lighten-3"><i class="fas fa-times delete-icon"></i></a>
+              </div>
             </div>
-            {% for boardgame in boardgames %}
+            <!-- {% for boardgame in boardgames %}
               {% if boardgame._id == game.boardgame%}
               <h4 class="board-game-heading center">{{ boardgame.boardgame }}</h4>
               {% endif %}
+            {% endfor %} -->
+            <h4 class="board-game-heading center">{{ game.game_name }}</h4>
+          
+            {% for game_player_info in game.players_scores %} 
+              <p class="player-and-score"> 
+                <span>
+                  {{ game_player_info.player_name }} 
+                  {% if game_player_info.isWinner %}
+                    <span  class="player-gap">
+                      <i class="fas fa-trophy orange-text"><span class="sr-only">trophy icon</span></i>
+                    </span>
+                  {% endif %}
+                </span>
+                <span>
+                  {{ game_player_info.score}}
+                </span>
+              </p>
             {% endfor %}
-            {% for player in players %} 
-              {% for game_player_info in game.players_scores %} 
-                {% if player._id == game_player_info.player %}
-                <p class="player-and-score"> 
-                  <span>
-                    {{ player.player }} 
-                    {% if game_player_info.isWinner %}
-                      <span  class="player-gap">
-                        <i class="fas fa-trophy orange-text"><span class="sr-only">trophy icon</span></i>
-                      </span>
-                    {% endif %}
-                  </span>
-                  <span>
-                    {{ game_player_info.score}}
-                  </span>
-                </p>
-                {% endif %}
-              {% endfor %}
-            {% endfor %}
+        
           </div>
         </div>
     </div>
@@ -45,15 +105,5 @@
   
 
  
-  <!-- Add Game Modal -->
-  <div id="add_game" class="modal">
-    <div class="modal-content">
-      <h2>add game</h2>
-    </div>
-    <div class="modal-footer">
-      <a href="{{ url_for('add_game') }}" class="modal-close waves-effect waves-green btn-flat">Submit</a>
-    </div>
-  </div>
-
-
+  
 {% endblock %}

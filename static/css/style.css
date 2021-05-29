@@ -49,16 +49,30 @@
 
 .modal-button{
   font-weight: 300;
-  font-size: medium;
   letter-spacing: 1px;
   display: flex;
   align-items: center;
 }
 
-.modal-button:hover{
+.edit-btn, .delete-btn{
+  padding: 0 10px;
+}
+
+.edit-btn .edit-icon, .delete-btn .delete-icon{
+  font-size: 1em;
+}
+
+.modal-button:hover, .edit-btn:hover, .delete-btn:hover{
   color:black;
   box-shadow: 0px 0px 8px black;
 }
+
+.btn-flat:hover {
+  background-color: lightgrey;
+  border-radius: 4px;
+}
+
+
 
 /* Flash messages */
 .flashes h5{
@@ -176,13 +190,19 @@ input[type=text]:not(.browser-default) {
 }
 
 /* Games.html */
+
 .card-header{
  display:flex;
  justify-content: space-between;
+ padding-left: 2vw;
+}
+
+.game-date{
+  font-style: italic;
 }
 
 .card-header p{
-  margin: 0px;
+  margin-bottom: 0px;
 }
 
 .board-game-heading{
@@ -198,5 +218,6 @@ input[type=text]:not(.browser-default) {
 .player-and-score{
   display: flex;
   justify-content: space-between;
-  padding: 0 5vw;
+  padding: 0 2vw;
 }
+

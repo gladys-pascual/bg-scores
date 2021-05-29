@@ -35,7 +35,7 @@ def get_games():
             }
             return updated_player
         # Getting players collection from database
-        players = mongo.db.players.find()
+        players = list(mongo.db.players.find())
 
         # Function to transform from DB format of 
         # boardgames collection to ideal template
@@ -46,12 +46,25 @@ def get_games():
             }
             return updated_boardgame
         # Getting boardgames collection from database
-        boardgames = mongo.db.boardgames.find()
+        boardgames = list(mongo.db.boardgames.find())
+
+        def mapGame(game):
+            for bg in boardgames:
+                if str(bg["_id"]) == game["boardgame"]:
+                    game["game_name"] = bg["boardgame"]
+
+            for p in players:
+                for bg_player in game["players_scores"]:
+                    if str(p["_id"]) == bg_player["player"]:
+                        bg_player["player_name"] = p["player"]
+
+            print(game)
+            return game
 
         return render_template("games.html", 
-            games=games, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+            games=map(mapGame, games), players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
     else:
-        return render_template("login.html")
+        return redirect(url_for("login"))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
