@@ -19,39 +19,57 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+# Function to transform from DB format of 
+# players collection to ideal template
+def mapPlayer(p):
+    updated_player = {
+        "_id": str(p["_id"]),
+        "player": p["player"]
+    }
+    return updated_player
+
+
+# Function to transform from DB format of 
+# boardgames collection to ideal template
+def mapBoardgame(bg):
+    updated_boardgame = {
+        "_id": str(bg["_id"]),
+        "boardgame": bg["boardgame"]
+    }
+    return updated_boardgame
+
+
+# Function to compare the ObjectId of the boardgames and players from
+# the boardgames and player collection to the data in the games collection
+def mapGame(game):
+    players = list(mongo.db.players.find())
+    boardgames = list(mongo.db.boardgames.find())
+
+    for bg in boardgames:
+        if str(bg["_id"]) == game["boardgame"]:
+            game["game_name"] = bg["boardgame"]
+
+    for p in players:
+        for bg_player in game["players_scores"]:
+            if str(p["_id"]) == bg_player["player"]:
+                bg_player["player_name"] = p["player"]
+
+    print(game)
+    return game
+
+
 @app.route("/")
 @app.route("/get_games")
 def get_games():
     if session:
-        #  Getting games collection from database
         games = mongo.db.games.find()
-
-        # Function to transform from DB format of 
-        # players collection to ideal template
-        def mapPlayer(p):
-            updated_player = {
-                "_id": str(p["_id"]),
-                "player": p["player"]
-            }
-            return updated_player
-        # Getting players collection from database
-        players = mongo.db.players.find()
-
-        # Function to transform from DB format of 
-        # boardgames collection to ideal template
-        def mapBoardgame(bg):
-            updated_boardgame = {
-                "_id": str(bg["_id"]),
-                "boardgame": bg["boardgame"]
-            }
-            return updated_boardgame
-        # Getting boardgames collection from database
-        boardgames = mongo.db.boardgames.find()
-
+        players = list(mongo.db.players.find())
+        boardgames = list(mongo.db.boardgames.find())
         return render_template("games.html", 
-            games=games, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+            games=map(mapGame, games), players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
     else:
-        return render_template("login.html")
+        return redirect(url_for("login"))
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -69,8 +87,6 @@ def register():
         }
         mongo.db.users.insert_one(register)
 
-        # Put the new user into 'session' cookie
-        session["user"] = request.form.get("username").lower()
         flash("Registration was successful!")
         return render_template("login.html")
 
@@ -91,7 +107,7 @@ def login():
                     session["user"] = request.form.get("username").lower()
                     return redirect(url_for("get_games"))
             else:
-                # Invalid passordmatch
+                # Invalid password match
                 flash("Invalid username and/or password.")
                 return redirect(url_for("login"))
 

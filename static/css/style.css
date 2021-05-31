@@ -34,7 +34,7 @@
 }
 
 .fa-icon {
-  padding-left: 8px;
+  padding-left: 4px;
 }
 
 .modal-button-wrapper{
@@ -49,15 +49,33 @@
 
 .modal-button{
   font-weight: 300;
-  font-size: medium;
   letter-spacing: 1px;
   display: flex;
   align-items: center;
 }
 
-.modal-button:hover{
+.edit-btn, .delete-btn{
+  padding: 0 10px;
+}
+
+.edit-btn .edit-icon, .delete-btn .delete-icon{
+  font-size: 1em;
+}
+
+.modal-button:hover, .edit-btn:hover, .delete-btn:hover{
   color:black;
   box-shadow: 0px 0px 8px black;
+}
+
+.btn-flat:hover {
+  background-color: lightgrey;
+  border-radius: 4px;
+}
+
+h3, h4{
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 4px;
 }
 
 /* Flash messages */
@@ -149,17 +167,14 @@ a:-webkit-any-link:focus-visible {
   font-weight: 300;
 }
 
-.input-field .prefix{
+.input-field .login-register-icons {
   padding-top: 8px;
   font-size: 1.5rem;
 }
 
-input[type=text]:not(.browser-default) {
-  border-bottom: 1px solid white;
-}
-
 #username, #password {
   color: white;
+  border-bottom: 1px solid white;
 }
 
 .submit-btn{
@@ -176,19 +191,19 @@ input[type=text]:not(.browser-default) {
 }
 
 /* Games.html */
+
 .card-header{
  display:flex;
  justify-content: space-between;
+ padding-left: 2vw;
+}
+
+.game-date{
+  font-style: italic;
 }
 
 .card-header p{
-  margin: 0px;
-}
-
-.board-game-heading{
-  text-transform: uppercase;
-  font-weight: 300;
-  letter-spacing: 4px;
+  margin-bottom: 0px;
 }
 
 .player-gap{
@@ -198,5 +213,27 @@ input[type=text]:not(.browser-default) {
 .player-and-score{
   display: flex;
   justify-content: space-between;
-  padding: 0 5vw;
+  padding: 0 2vw;
+}
+
+/* add games */
+.add-game-heading{
+  padding: 8px;
+}
+
+.choose-bg{
+  margin-bottom: 0px;
+}
+
+.dropdown-icon .prefix{
+  padding-top:0px;
+}
+
+.row .player{
+  padding-right: 12px;
+}
+
+#add-game-player:hover{
+  
+
 }
