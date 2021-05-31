@@ -3,17 +3,18 @@
   <!-- Modal Trigger -->
   <div class="modal-button-wrapper">
     <button class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" data-target="add_game">
-      Add a game <i class="fas fa-gamepad modal-button-icon"><span class="sr-only">game icon</span></i>
+      Add a game <i class="fas fa-dice-d6 modal-button-icon"><span class="sr-only">game icon</span></i>
     </button>
   </div>
   <!-- Add Game Modal -->
   <div id="add_game" class="modal">
     <div class="modal-content">
-      <form class="col s8 offset-s2" action="">
-        <h4>Add a game</h4>
+      <form class="col s10 offset-s1 l8 offset-l2" action="">
+        <h4 class="center add-game-heading teal-text">Add a game</h4>
         <!-- Choose a boardgame  -->
-        <div class="row">
+        <div class="row choose-bg">
           <div class="input-field col s10 offset-s1">
+            <i class="fas fa-dice-d6 prefix"></i>
             <select id="boardgame" name="boardgame" class="validate" required>
               <option value="" disabled selected>Choose a boardgame</option>
               {% for boardgame in boardgames %}
@@ -42,7 +43,8 @@
         <!-- Choose a player  --> 
         <div class="row" >
           <div id="add-player-score">
-            <div class="input-field col s6 offset-s1">
+            <div class="input-field col s7 offset-s1 player">
+              <i class="fas fa-user prefix dropdown-icon"></i>
               <select id="boardgame" name="boardgame" class="validate" required>
                 <option value="" disabled selected>Choose a player</option>
                 {% for player in players %}
@@ -51,18 +53,25 @@
               </select>
               <label for="player" >Player</label>
             </div>  
-            <div class="input-field col s4">
-              <input type="text" class="validate" required>
+            <div class="input-field col s3 score">
+              <input
+                id="score"
+                name="score"
+                min="0"
+                type="number" 
+                class="validate" 
+                required
+              >
               <label for="score">Score</label>
+              <i class="fas fa-pen prefix"></i>
             </div>
           </div>
         </div>
         <div class="row">
-          <button class="waves-effect waves-light btn teal lighten-4 black-text col s4 offset-s1" id="add-game-player">
-            + Add a player
+          <button class="waves-effect waves-light btn teal lighten-4 black-text col s10 offset-s1 m6 offset-m1" id="add-game-player">
+            <i class="fas fa-user-plus"><span class="sr-only">Plus</span></i> Add another player
           </button>
         </div>
-
       </form>
     </div>
     <div class="modal-footer">
