@@ -2,13 +2,15 @@
 {% block content %}
   <!-- Modal Trigger -->
   <div class="modal-button-wrapper">
-    <button class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" data-target="add_game">Add a game <i class="fas fa-gamepad modal-button-icon"><span class="sr-only">game icon</span></i></button>
+    <button class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" data-target="add_game">
+      Add a game <i class="fas fa-gamepad modal-button-icon"><span class="sr-only">game icon</span></i>
+    </button>
   </div>
   <!-- Add Game Modal -->
   <div id="add_game" class="modal">
     <div class="modal-content">
       <form class="col s8 offset-s2" action="">
-        <h3>Add a game</h3>
+        <h4>Add a game</h4>
         <!-- Choose a boardgame  -->
         <div class="row">
           <div class="input-field col s10 offset-s1">
@@ -36,10 +38,11 @@
           </div>
         </div>
 
+
         <!-- Choose a player  --> 
-        <div class="row player-score">
-          <div>
-            <div class="input-field col s5 offset-s1">
+        <div class="row" >
+          <div id="add-player-score">
+            <div class="input-field col s6 offset-s1">
               <select id="boardgame" name="boardgame" class="validate" required>
                 <option value="" disabled selected>Choose a player</option>
                 {% for player in players %}
@@ -48,11 +51,16 @@
               </select>
               <label for="player" >Player</label>
             </div>  
-            <div class="input-field col s4 offset-s7">
+            <div class="input-field col s4">
               <input type="text" class="validate" required>
               <label for="score">Score</label>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <button class="waves-effect waves-light btn teal lighten-4 black-text col s4 offset-s1" id="add-game-player">
+            + Add a player
+          </button>
         </div>
 
       </form>
@@ -73,11 +81,6 @@
                 <a href="#" class="waves-effect waves-light btn-small delete-btn teal lighten-3"><i class="fas fa-times delete-icon"></i></a>
               </div>
             </div>
-            <!-- {% for boardgame in boardgames %}
-              {% if boardgame._id == game.boardgame%}
-              <h4 class="board-game-heading center">{{ boardgame.boardgame }}</h4>
-              {% endif %}
-            {% endfor %} -->
             <h4 class="board-game-heading center">{{ game.game_name }}</h4>
           
             {% for game_player_info in game.players_scores %} 
@@ -95,15 +98,8 @@
                 </span>
               </p>
             {% endfor %}
-        
           </div>
         </div>
     </div>
-    
-  {% endfor %} 
-
-  
-
- 
-  
+  {% endfor %}   
 {% endblock %}
