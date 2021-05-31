@@ -229,11 +229,14 @@ a:-webkit-any-link:focus-visible {
   padding-top:0px;
 }
 
-.row .player{
-  padding-right: 12px;
+.player-name{
+  font-size: medium;
 }
 
-#add-game-player:hover{
-  
+.player-name i {
+  padding-right: 8px;
+}
 
+.player-name-wrapper{
+  margin-top: 12px;
 }

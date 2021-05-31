@@ -42,36 +42,22 @@
 
         <!-- Choose a player  --> 
         <div class="row" >
-          <div id="add-player-score">
-            <div class="input-field col s7 offset-s1 player">
-              <i class="fas fa-user prefix dropdown-icon"></i>
-              <select id="boardgame" name="boardgame" class="validate" required>
-                <option value="" disabled selected>Choose a player</option>
-                {% for player in players %}
-                  <option value="{{ player._id }}">{{ player.player }}</option>
-                {% endfor %}
-              </select>
-              <label for="player" >Player</label>
-            </div>  
-            <div class="input-field col s3 score">
-              <input
-                id="score"
-                name="score"
-                min="0"
-                type="number" 
-                class="validate" 
-                required
-              >
-              <label for="score">Score</label>
-              <i class="fas fa-pen prefix"></i>
-            </div>
-          </div>
+          <div id="players" class="input-field col s10 offset-s1 player">
+            <i class="fas fa-user prefix dropdown-icon"></i>
+            <select multiple id="player" name="player" class="validate" required>
+              <option value="" disabled>Choose a player</option>
+              {% for player in players %}
+                <option value="{{ player._id }}">{{ player.player }}</option>
+              {% endfor %}
+            </select>
+            <label for="player" >Player</label>
+          </div>  
         </div>
-        <div class="row">
-          <button class="waves-effect waves-light btn teal lighten-4 black-text col s10 offset-s1 m6 offset-m1" id="add-game-player">
-            <i class="fas fa-user-plus"><span class="sr-only">Plus</span></i> Add another player
-          </button>
+
+        <div class="row" id="selected-players">
+
         </div>
+        
       </form>
     </div>
     <div class="modal-footer">

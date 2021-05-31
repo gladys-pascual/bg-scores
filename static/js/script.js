@@ -10,6 +10,8 @@ $(document).ready(function(){
       done: "Select"
     }
   });
+
+
   $('select').formSelect();
   validateMaterializeSelect();
   function validateMaterializeSelect() {
@@ -38,4 +40,31 @@ $(document).ready(function(){
           }
       });
   }
+
+    $("#players li").on("click", function () {
+      const selectedPlayers = [
+        ...document.querySelectorAll("#players li.selected "),
+      ].map((el) => el.textContent);
+      $("#selected-players").empty();
+
+      selectedPlayers.forEach((player) =>
+        $("#selected-players").append(`
+        <div class="col s5 offset-s2 player-name-wrapper">
+	        <p class="player-name"><i class="far fa-user prefix"></i>${player}<p>
+				</div>
+        <div class="input-field col s2 score">
+          <input
+						id="score"
+						name="score"
+						min="0"
+						type="number" 
+						class="validate" 
+						required
+						>
+					<label for="score">Score</label>	
+          </div>
+        </div>
+        `)
+      );
+    });
 });
