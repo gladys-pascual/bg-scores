@@ -9,7 +9,7 @@
   <!-- Add Game Modal -->
   <div id="add_game" class="modal">
     <div class="modal-content">
-      <form class="col s10 offset-s1 l8 offset-l2" action="">
+      <form class="col s10 offset-s1 l8 offset-l2" method="POST" action="{{ url_for('add_game') }}">
         <h4 class="center add-game-heading teal-text">Add a game</h4>
         <!-- Choose a boardgame  -->
         <div class="row choose-bg">
@@ -62,7 +62,7 @@
     </div>
     <div class="modal-footer">
       <a href="{{ url_for('get_games') }}" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
-      <a href="{{ url_for('add_game') }}" class="modal-close waves-effect waves-light btn-flat">Submit</a>
+      <button type="submit" class="modal-close waves-effect waves-light btn-flat">Submit</button>
     </div>
   </div>
   {% for game in games %}

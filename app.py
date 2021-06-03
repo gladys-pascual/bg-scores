@@ -53,8 +53,6 @@ def mapGame(game):
         for bg_player in game["players_scores"]:
             if str(p["_id"]) == bg_player["player"]:
                 bg_player["player_name"] = p["player"]
-
-    print(game)
     return game
 
 
@@ -129,6 +127,22 @@ def logout():
 
 @app.route("/add_game", methods=["GET", "POST"])
 def add_game():
+    if request.method == "POST":
+
+        scores = {
+            "scores": request.form.getlist("score")
+        }
+
+        game = {
+            "boardgame": request.form.get("boardgame"),
+            "game_date": request.form.get("game_date"),
+            "created_by": session["user"]
+        }
+
+        print("scores", scores)
+        print(game)
+        flash("Game added sucessfully!")
+        return redirect(url_for("get_games"))
     return redirect(url_for("get_games"))
 
 
