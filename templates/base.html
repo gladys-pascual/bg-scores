@@ -47,7 +47,7 @@
           {% if session.user %}
             <ul class="right hide-on-med-and-down header-links">
               <li><a href="{{ url_for('get_games') }}">Home</a></li>
-              <!-- <li><a href="{{ url_for('add_game') }}">Play a Game</a></li> -->
+              <li><a href="{{ url_for('add_game') }}">Play a Game</a></li>
               <li><a href="#">Manage Board Games</a></li>
               <li><a href="#">Manage Players</a></li>
               <!-- Dropdown Trigger -->
@@ -79,7 +79,7 @@
           </li>
           <li><div class="divider teal lighten-2"></div></li>
           <li><a href="{{ url_for('get_games') }}">Home</a></li>
-          <!-- <li><a href="{{ url_for('add_game') }}">Play a Game</a></li> -->
+          <li><a href="{{ url_for('add_game') }}">Play a Game</a></li>
           <li><a href="#">Manage Board Games</a></li>
           <li><a href="#">Manage Players</a></li>
           <li><a href="{{ url_for('logout') }}">Logout</a></li>

@@ -1,9 +1,8 @@
 $(document).ready(function(){
   $(".dropdown-trigger").dropdown({coverTrigger: false, hover: true});
   $('.sidenav').sidenav({edge: "right"});
-  $('.modal').modal();
   $('.datepicker').datepicker({
-    format: " dd mmm, yyyy",
+    format: " dd mmm yyyy",
     yearRange: 1,
     showClearBtn: true,
     i18n: {
