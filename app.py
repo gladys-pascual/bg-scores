@@ -56,6 +56,21 @@ def mapGame(game):
     return game
 
 
+# Function that creates the players_scores array
+# that will be added to the database
+def mapPlayersScores():
+    scores = request.form.getlist("score")
+    players = request.form.getlist("player")
+    players_scores = []
+    for i in range(len(scores)):
+        players_scores.append({
+            "player": players[i],
+            "score": scores[i],
+            "isWinner": max(scores) == scores[i]
+        })
+    return players_scores
+
+
 @app.route("/")
 @app.route("/get_games")
 def get_games():
@@ -124,20 +139,6 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
-# Function that creates the players_scores array
-# that will be added to the database
-def mapPlayersScores():
-    scores = request.form.getlist("score")
-    players = request.form.getlist("player")
-    players_scores = []
-    for i in range(len(scores)):
-        players_scores.append({
-            "player": players[i],
-            "score": scores[i],
-            "isWinner": max(scores) == scores[i]
-        })
-    return players_scores
-
 
 @app.route("/add_game", methods=["GET", "POST"])
 def add_game():
@@ -153,14 +154,9 @@ def add_game():
         flash("Game added sucessfully!")
         return redirect(url_for("get_games"))
     
-    players = list(mongo.db.players.find())
-    boardgames = list(mongo.db.boardgames.find())
+    players = list(mongo.db.players.find().sort("player", 1))
+    boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
     return render_template("add_game.html", players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
-
-
-@app.route("/edit_game", methods=["GET", "POST"])
-def edit_game():
-    return redirect(url_for("get_games"))
 
 
 if __name__ == "__main__":

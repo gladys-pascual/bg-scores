@@ -1,62 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
-
-  <!-- Add Game Modal -->
-  <div id="add_game" class="row">
-    <form class="col s10 offset-s1 l8 offset-l2" method="POST" action="{{ url_for('add_game') }}">
-      <h4 class="center add-game-heading teal-text">Add a game</h4>
-      <!-- Choose a boardgame  -->
-      <div class="row choose-bg">
-        <div class="input-field col s10 offset-s1">
-          <i class="fas fa-dice-d6 prefix"></i>
-          <select id="boardgame" name="boardgame" class="validate" required>
-            <option value="" disabled selected>Choose a boardgame</option>
-            {% for boardgame in boardgames %}
-              <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
-            {% endfor %}
-          </select>
-          <label for="boardgame" >Boardgame</label>
-        </div>  
-      </div>
-
-      <!-- date picker -->
-      <div class="row">
-        <div class="input-field col s10 offset-s1 small">
-          <i class="fas fa-calendar-alt prefix"></i>
-          <input
-            id="game_date"
-            name="game_date"
-            class="datepicker validate"
-            required
-          ></input>
-          <label for="game_date">Game Date</label>
+  <section class="add-game-wrapper">
+    <div id="add_game" class="card-panel">
+      <form method="POST" action="{{ url_for('add_game') }}">
+        <h4 class="center add-game-heading teal-text">Add a game</h4>
+        <!-- Choose a boardgame  -->
+        <div class="row choose-bg">
+          <div class="input-field col s12 m10 offset-m1">
+            <i class="fas fa-dice-d6 prefix"></i>
+            <select id="boardgame" name="boardgame" required>
+              <option value="" disabled selected>Choose a boardgame</option>
+              {% for boardgame in boardgames %}
+                <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
+              {% endfor %}
+            </select>
+            <label for="boardgame" >Boardgame</label>
+          </div>  
         </div>
-      </div>
 
-
-      <!-- Choose a player  --> 
-      <div class="row" >
-        <div id="players" class="input-field col s10 offset-s1 player">
-          <i class="fas fa-user prefix dropdown-icon"></i>
-          <select multiple id="player" name="player" class="validate" required>
-            <option value="" disabled>Choose a player</option>
-            {% for player in players %}
-              <option value="{{ player._id }}">{{ player.player }}</option>
-            {% endfor %}
-          </select>
-          <label for="player" >Player</label>
-        </div>  
-      </div>
-
-      <div class="row" id="selected-players">
-
-      </div>
-      <div class="row">
-        <div class="col s12 offset-s7">
-          <button type="submit" class="modal-close waves-effect waves-light btn-flat">Submit</button>
+        <!-- date picker -->
+        <div class="row">
+          <div class="input-field col s12 m10 offset-m1 small">
+            <i class="fas fa-calendar-alt prefix"></i>
+            <input
+              id="game_date"
+              name="game_date"
+              class="datepicker validate"
+              type="text"
+              required
+            ></input>
+            <label class="game-date-label" for="game_date">Game Date</label>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
 
+        <!-- Choose a player  --> 
+        <div class="row" >
+          <div id="players" class="input-field col s12 m10 offset-m1 player">
+            <i class="fas fa-user prefix dropdown-icon"></i>
+            <select multiple id="player" name="player" class="validate" required>
+              <option value="" disabled>Choose a player</option>
+              {% for player in players %}
+                <option value="{{ player._id }}">{{ player.player }}</option>
+              {% endfor %}
+            </select>
+            <label for="player" >Player</label>
+          </div>  
+        </div>
+
+        <div class="row" id="selected-players">
+        </div>
+
+        <div class="submit-btn-wrapper">
+          <button type="submit" class="modal-close waves-effect waves-light btn-flat submit-btn teal lighten-4">Submit</button>
+        </div>
+      </form>
+    </div>
+  </section>
 {% endblock %}

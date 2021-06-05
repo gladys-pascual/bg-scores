@@ -157,6 +157,8 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 
 ## Credits
 <hr>
+- Hide Arrows From Input Number 
+https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
 
 ### Code
 

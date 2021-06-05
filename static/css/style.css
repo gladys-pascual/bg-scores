@@ -1,3 +1,18 @@
+*{
+  box-sizing: border-box;
+}
+
+/* Show Arrows From Input Number  */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  opacity: 1;
+  height: 20px;
+}
+input[type=number] {
+  opacity: 1;
+  
+}
+
 /*********** Reusable styles  *************/
 /* Custom animations */
 @keyframes logo-bounce-animation {
@@ -29,29 +44,16 @@
 }
 
 /* General */
+body {
+  overflow-x: hidden; /* Hide scrollbars */
+}
+
 .sr-only {
   display: none;
 }
 
 .fa-icon {
   padding-left: 4px;
-}
-
-.modal-button-wrapper{
-  display:flex;
-  margin: 5vh;
-  justify-content: center;
-}
-
-.modal-button-icon{
-  padding-left: 8px;
-}
-
-.modal-button{
-  font-weight: 300;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
 }
 
 .edit-btn, .delete-btn{
@@ -62,20 +64,23 @@
   font-size: 1em;
 }
 
-.modal-button:hover, .edit-btn:hover, .delete-btn:hover{
+.edit-btn:hover, .delete-btn:hover{
   color:black;
   box-shadow: 0px 0px 8px black;
 }
 
-.btn-flat:hover {
-  background-color: lightgrey;
-  border-radius: 4px;
+.submit-btn:hover {
+  background-color: #4db6ac !important;
 }
 
 h3, h4{
   text-transform: uppercase;
   font-weight: 300;
   letter-spacing: 4px;
+}
+
+input:focus::placeholder {
+  color: transparent;
 }
 
 /* Flash messages */
@@ -89,7 +94,6 @@ h3, h4{
   margin-bottom: 0px;
 }
 
-
 /* Navbar */
 nav {
   height: 100px;
@@ -102,6 +106,7 @@ nav ul a {
 nav ul a:hover {
   border-radius: 8px;
   color: rgb(78, 75, 75);
+  background-color: rgba(212, 197, 197, 0.5);
 }
 
 .logo {
@@ -191,15 +196,34 @@ a:-webkit-any-link:focus-visible {
 }
 
 /* Games.html */
+.game-cards-wrapper{
+  display:flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.game-cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.games{
+  width: 350px;
+  margin: 20px;
+}
 
 .card-header{
- display:flex;
- justify-content: space-between;
- padding-left: 2vw;
+  display:flex;
+  justify-content: space-between;
+  align-content: center;
+  padding-left: 2vw;
 }
 
 .game-date{
   font-style: italic;
+  margin: 6px;
+  align-items: center;
 }
 
 .card-header p{
@@ -217,9 +241,20 @@ a:-webkit-any-link:focus-visible {
 }
 
 /* add games */
+.add-game-wrapper{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+#add_game{
+  width: 700px;
+}
+
 .add-game-heading{
   padding: 8px;
-}
+} 
 
 .choose-bg{
   margin-bottom: 0px;
@@ -237,6 +272,43 @@ a:-webkit-any-link:focus-visible {
   padding-right: 8px;
 }
 
+.submit-btn-wrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+
 .player-name-wrapper{
   margin-top: 12px;
 }
+
+
+
+/* Media queries */
+@media screen and (max-width: 800px) {
+  #add_game{
+    width: 500px;
+  }
+ }
+
+@media screen and (max-width: 500px) {
+  .games{
+    width: 300px;
+    margin: 10px;
+  }
+
+  #add_game{
+    width: 350px;
+  }
+
+  #select-options-cd605545-dd9e-aefb-6a0d-caa49848fe67{
+    width: 200px;
+  }
+
+  .datepicker-modal {
+    max-width: 30px;
+  }
+
+  .modal .datepicker-modal .open{
+    margin: 0px;
+  }
+ }
