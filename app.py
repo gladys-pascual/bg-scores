@@ -151,6 +151,14 @@ def add_game():
     return render_template("add_game.html", players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
 
 
+@app.route("/edit_game/<game_id>", methods=["GET", "POST"])
+def edit_game(game_id):
+    game = mongo.db.games.find_one({"_id": ObjectId()})
+    players = list(mongo.db.players.find().sort("player", 1))
+    boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
+    return render_template("edit_game.html", game=game, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+
+
 @app.route("/get_boardgames")
 def get_boardgames():
     boardgames = list(mongo.db.boardgames.find())

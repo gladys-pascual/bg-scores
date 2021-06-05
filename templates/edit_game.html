@@ -2,13 +2,13 @@
 {% block content %}
   <section class="add-game-wrapper">
     <div id="add_game" class="card-panel">
-      <form method="POST" action="{{ url_for('add_game') }}">
-        <a href="{{ url_for('get_games') }}" id="back-to-games" class="black-text">
-          <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
-            ><i class="fas fa-chevron-left"></i>
-          <span>back to games</span>
-        </a>
-        <h4 class="center add-game-heading teal-text">Add a game</h4>
+      <a href="{{ url_for('get_games') }}" id="back-to-games" class="black-text">
+        <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
+          ><i class="fas fa-chevron-left"></i>
+        <span>back to games</span>
+      </a>
+      <form method="POST" action="{{ url_for('edit_game', game_id=game._id) }}">
+        <h4 class="center add-game-heading teal-text">Edit game</h4>
         <!-- Choose a boardgame  -->
         <div class="row choose-bg">
           <div class="input-field col s12 m10 offset-m1">

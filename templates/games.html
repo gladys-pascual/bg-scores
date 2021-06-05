@@ -1,5 +1,19 @@
 {% extends "base.html" %} 
 {% block content %}
+  <div class="add-bg-btn-wrapper center">
+    <a
+      href="{{ url_for('add_game') }}"
+      class="
+        modal-close
+        waves-effect waves-light
+        btn-flat
+        add-game-btn
+        teal
+        lighten-4
+      "
+      >Add a game <i class="fas fa-dice-d6 prefix"></i></a
+    >
+  </div>
   <div class="game-cards-wrapper">
     <div class="game-cards">
       {% for game in games %}
@@ -8,7 +22,7 @@
           <p class="game-date">{{ game.game_date }}</p>
           <div class="edit-delete-button">
             <a
-              href="#"
+              href="{{ url_for('edit_game', game_id=game._id) }}"
               class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
               ><i class="fas fa-edit edit-icon"></i
             ></a>

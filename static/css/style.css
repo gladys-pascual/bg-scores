@@ -75,17 +75,17 @@ input:focus::placeholder {
   font-size: 1em;
 }
 
-.submit-btn, .add-bg-btn, .add-player-btn{
+.submit-btn, .add-game-btn, .add-bg-btn, .add-player-btn{
   letter-spacing: 2px;
   font-weight: 300;
 }
 
-.add-bg-btn, .add-player-btn{
+.add-game-btn, .add-bg-btn, .add-player-btn{
   margin-top: 40px;
   font-size: 20px;
 }
 
-.edit-btn:hover, .delete-btn:hover, .submit-btn:hover, .add-bg-btn:hover, .add-player-btn:hover {
+.add-game-btn:hover, .edit-btn:hover, .delete-btn:hover, .submit-btn:hover, .add-bg-btn:hover, .add-player-btn:hover {
   background-color: #4db6ac !important;
   color: white;
 }
@@ -295,12 +295,12 @@ a:-webkit-any-link:focus-visible {
 }
 
  /* add boardgame, add player */
- #back-to-boardgames, #back-to-players{
+ #back-to-games, #back-to-boardgames, #back-to-players{
   font-weight: 300;
  }
 
 
- #back-to-boardgames:hover, #back-to-players:hover{
+ #back-to-games:hover, #back-to-boardgames:hover, #back-to-players:hover{
   color: #009688 !important;
  }
 
