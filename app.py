@@ -44,7 +44,6 @@ def mapBoardgame(bg):
 def mapGame(game):
     players = list(mongo.db.players.find())
     boardgames = list(mongo.db.boardgames.find())
-
     for bg in boardgames:
         if str(bg["_id"]) == game["boardgame"]:
             game["game_name"] = bg["boardgame"]
@@ -93,16 +92,13 @@ def register():
         if existing_user:
             flash("Username already exists, please try a new one.")
             return redirect(url_for("register"))
-
         register = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register)
-
         flash("Registration was successful!")
         return render_template("login.html")
-
     return render_template("register.html")
 
 
@@ -111,8 +107,7 @@ def login():
     if request.method == "POST":
         # Check if username exists in the database
         existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
-        
+            {"username": request.form.get("username").lower()})    
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
@@ -123,12 +118,10 @@ def login():
                 # Invalid password match
                 flash("Invalid username and/or password.")
                 return redirect(url_for("login"))
-
         else:
             # Username doesn't exist
             flash("Incorrect username and/or password.")
             return redirect(url_for("login"))
-    
     return render_template("login.html")
 
 
@@ -151,9 +144,8 @@ def add_game():
         game['players_scores'] = mapPlayersScores()
         mongo.db.games.insert_one(game)
         
-        flash("Game added sucessfully!")
+        flash("Game was added sucessfully!")
         return redirect(url_for("get_games"))
-    
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
     return render_template("add_game.html", players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
@@ -173,7 +165,7 @@ def add_boardgame():
             "created_by": session["user"],
         }
         mongo.db.boardgames.insert_one(boardgame)
-        flash("Boardgame added sucessfully!")
+        flash("Boardgame was added sucessfully!")
         return redirect(url_for("get_boardgames"))
     return render_template("add_boardgame.html")
 
@@ -192,7 +184,7 @@ def add_player():
             "created_by": session["user"],
         }
         mongo.db.players.insert_one(player)
-        flash("Player added sucessfully!")
+        flash("Player was added sucessfully!")
         return redirect(url_for("get_players"))
     return render_template("add_player.html")
 
