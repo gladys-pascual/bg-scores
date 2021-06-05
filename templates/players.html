@@ -1,5 +1,19 @@
 {% extends "base.html" %} 
 {% block content %}
+  <div class="add-player-btn-wrapper center">
+    <a
+      href="{{ url_for('add_player') }}"
+      class="
+        modal-close
+        waves-effect waves-light
+        btn-flat
+        add-player-btn
+        teal
+        lighten-4
+      "
+      >Add a player <i class="far fa-user prefix"></i></a
+    >
+  </div>
   <div class="game-cards-wrapper">
     <div class="game-cards">
       {% for player in players %}
@@ -7,7 +21,7 @@
         <div class="edit-button">
           <a
             href="#"
-            class="waves-effect waves-light btn-small edit-btn teal lighten-3"
+            class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
             ><i class="fas fa-edit edit-icon"></i
           ></a>
         </div>

@@ -1,26 +1,26 @@
 {% extends "base.html" %} 
 {% block content %}
-<div class="add-boardgame-wrapper">
-  <div class="card-panel add-boardgame">
-    <form method="POST" action="{{ url_for('add_boardgame') }}">
-      <a href="{{ url_for('get_boardgames') }}" id="back-to-boardgames" class="black-text">
+<div class="add-player-wrapper">
+  <div class="card-panel add-player">
+    <form method="POST" action="{{ url_for('add_player') }}">
+      <a href="{{ url_for('get_players') }}" id="back-to-players" class="black-text">
         <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
           ><i class="fas fa-chevron-left"></i>
-        <span>back to boardgames</span>
+        <span>back to players</span>
       </a>
-      <h4 class="center add-game-heading teal-text">Add a boardgame</h4>
+      <h4 class="center add-game-heading teal-text">Add a player</h4>
       <div class="input-field">
         <input
-          id="add_boardgame"
-          name="add_boardgame"
+          id="add_player"
+          name="add_player"
           type="text"
           minlength="2"
-          maxlength="30"
+          maxlength="15"
           pattern="^[a-zA-Z0-9]{5,15}$"
           class="validate"
           required
         />
-        <label for="add_boardgame">Boardgame...</label>
+        <label for="add_player">Player...</label>
       </div>
       <div class="submit-btn-wrapper">
         <button

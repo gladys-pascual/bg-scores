@@ -165,10 +165,36 @@ def get_boardgames():
     return render_template("boardgames.html", boardgames=map(mapBoardgame, boardgames))
 
 
+@app.route("/add_boardgame", methods=["GET", "POST"])
+def add_boardgame():
+    if request.method == "POST":
+        boardgame = {
+            "boardgame": request.form.get("add_boardgame"),
+            "created_by": session["user"],
+        }
+        mongo.db.boardgames.insert_one(boardgame)
+        flash("Boardgame added sucessfully!")
+        return redirect(url_for("get_boardgames"))
+    return render_template("add_boardgame.html")
+
+
 @app.route("/get_players")
 def get_players():
     players = list(mongo.db.players.find())
     return render_template("players.html", players=map(mapPlayer, players))
+
+
+@app.route("/add_player", methods=["GET", "POST"])
+def add_player():
+    if request.method == "POST":
+        player = {
+            "player": request.form.get("add_player"),
+            "created_by": session["user"],
+        }
+        mongo.db.players.insert_one(player)
+        flash("Player added sucessfully!")
+        return redirect(url_for("get_players"))
+    return render_template("add_player.html")
 
 
 if __name__ == "__main__":
