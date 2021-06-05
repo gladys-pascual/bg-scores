@@ -1,17 +1,14 @@
 $(document).ready(function(){
   $(".dropdown-trigger").dropdown({coverTrigger: false, hover: true});
   $('.sidenav').sidenav({edge: "right"});
-  $('.modal').modal();
   $('.datepicker').datepicker({
-    format: " dd mmm, yyyy",
+    format: "dd mmm yyyy",
     yearRange: 1,
     showClearBtn: true,
     i18n: {
       done: "Select"
     }
   });
-
-
   $('select').formSelect();
   validateMaterializeSelect();
   function validateMaterializeSelect() {
@@ -49,10 +46,10 @@ $(document).ready(function(){
 
       selectedPlayers.forEach((player) =>
         $("#selected-players").append(`
-        <div class="col s5 offset-s2 player-name-wrapper">
-	        <p class="player-name"><i class="far fa-user prefix"></i>${player}<p>
+        <div class="col s6 offset-m2 player-name-wrapper">
+	        <p class="player-name"><i class="far fa-user prefix"></i>${player}</p>
 				</div>
-        <div class="input-field col s2 score">
+        <div class="input-field col s6 m2 score">
           <input
 						id="score"
 						name="score"

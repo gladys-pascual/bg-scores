@@ -1,100 +1,41 @@
 {% extends "base.html" %} 
 {% block content %}
-  <!-- Modal Trigger -->
-  <div class="modal-button-wrapper">
-    <button class="waves-effect waves-light btn modal-trigger modal-button teal lighten-3" data-target="add_game">
-      Add a game <i class="fas fa-dice-d6 modal-button-icon"><span class="sr-only">game icon</span></i>
-    </button>
-  </div>
-  <!-- Add Game Modal -->
-  <div id="add_game" class="modal">
-    <div class="modal-content">
-      <form class="col s10 offset-s1 l8 offset-l2" method="POST" action="{{ url_for('add_game') }}">
-        <h4 class="center add-game-heading teal-text">Add a game</h4>
-        <!-- Choose a boardgame  -->
-        <div class="row choose-bg">
-          <div class="input-field col s10 offset-s1">
-            <i class="fas fa-dice-d6 prefix"></i>
-            <select id="boardgame" name="boardgame" class="validate" required>
-              <option value="" disabled selected>Choose a boardgame</option>
-              {% for boardgame in boardgames %}
-                <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
-              {% endfor %}
-            </select>
-            <label for="boardgame" >Boardgame</label>
-          </div>  
-        </div>
-
-        <!-- date picker -->
-        <div class="row">
-          <div class="input-field col s10 offset-s1 small">
-            <i class="fas fa-calendar-alt prefix"></i>
-            <input
-              id="game_date"
-              name="game_date"
-              class="datepicker validate"
-              required
-            ></input>
-            <label for="game_date">Game Date</label>
+  <div class="game-cards-wrapper">
+    <div class="game-cards">
+      {% for game in games %}
+      <div class="games card-panel">
+        <div class="card-header">
+          <p class="game-date">{{ game.game_date }}</p>
+          <div class="edit-delete-button">
+            <a
+              href="#"
+              class="waves-effect waves-light btn-small edit-btn teal lighten-3"
+              ><i class="fas fa-edit edit-icon"></i
+            ></a>
+            <a
+              href="#"
+              class="waves-effect waves-light btn-small delete-btn teal lighten-3"
+              ><i class="fas fa-times delete-icon"></i
+            ></a>
           </div>
         </div>
-
-
-        <!-- Choose a player  --> 
-        <div class="row" >
-          <div id="players" class="input-field col s10 offset-s1 player">
-            <i class="fas fa-user prefix dropdown-icon"></i>
-            <select multiple id="player" name="player" class="validate" required>
-              <option value="" disabled>Choose a player</option>
-              {% for player in players %}
-                <option value="{{ player._id }}">{{ player.player }}</option>
-              {% endfor %}
-            </select>
-            <label for="player" >Player</label>
-          </div>  
-        </div>
-
-        <div class="row" id="selected-players">
-
-        </div>
-        
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="{{ url_for('get_games') }}" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
-      <button type="submit" class="modal-close waves-effect waves-light btn-flat">Submit</button>
+        <h4 class="board-game-heading center">{{ game.game_name }}</h4>
+        {% for game_player_info in game.players_scores %}
+        <p class="player-and-score col s10 offset-s1 m6 offset-m3">
+          <span>
+            {{ game_player_info.player_name }} {% if game_player_info.isWinner %}
+            <span class="player-gap">
+              <i class="fas fa-trophy orange-text"
+                ><span class="sr-only">trophy icon</span></i
+              >
+            </span>
+            {% endif %}
+          </span>
+          <span> {{ game_player_info.score}} </span>
+        </p>
+        {% endfor %}
+      </div>
+      {% endfor %}
     </div>
   </div>
-  {% for game in games %}
-    <div class="row">
-        <div class="col s10 offset-s1 m8 offset-m2 l6 offset-m3">
-          <div class="card-panel">
-            <div class="card-header">
-              <p class="game-date">{{ game.game_date }}</p>
-              <div class="edit-delete-button">
-                <a href="#" class="waves-effect waves-light btn-small edit-btn teal lighten-3"><i class="fas fa-edit edit-icon"></i></a>
-                <a href="#" class="waves-effect waves-light btn-small delete-btn teal lighten-3"><i class="fas fa-times delete-icon"></i></a>
-              </div>
-            </div>
-            <h4 class="board-game-heading center">{{ game.game_name }}</h4>
-          
-            {% for game_player_info in game.players_scores %} 
-              <p class="player-and-score"> 
-                <span>
-                  {{ game_player_info.player_name }} 
-                  {% if game_player_info.isWinner %}
-                    <span  class="player-gap">
-                      <i class="fas fa-trophy orange-text"><span class="sr-only">trophy icon</span></i>
-                    </span>
-                  {% endif %}
-                </span>
-                <span>
-                  {{ game_player_info.score}}
-                </span>
-              </p>
-            {% endfor %}
-          </div>
-        </div>
-    </div>
-  {% endfor %}   
 {% endblock %}
