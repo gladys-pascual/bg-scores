@@ -159,6 +159,18 @@ def add_game():
     return render_template("add_game.html", players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
 
 
+@app.route("/get_boardgames")
+def get_boardgames():
+    boardgames = list(mongo.db.boardgames.find())
+    return render_template("boardgames.html", boardgames=map(mapBoardgame, boardgames))
+
+
+@app.route("/get_players")
+def get_players():
+    players = list(mongo.db.players.find())
+    return render_template("players.html", players=map(mapPlayer, players))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

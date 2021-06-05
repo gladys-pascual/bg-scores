@@ -281,7 +281,11 @@ a:-webkit-any-link:focus-visible {
   margin-top: 12px;
 }
 
-
+ /* add boardgames, add players */
+ .edit-button{
+  display: flex;
+  justify-content: flex-end;
+}
 
 /* Media queries */
 @media screen and (max-width: 800px) {
@@ -312,3 +316,4 @@ a:-webkit-any-link:focus-visible {
     margin: 0px;
   }
  }
+
