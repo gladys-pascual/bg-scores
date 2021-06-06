@@ -2,25 +2,26 @@
 {% block content %}
 <div class="add-boardgame-wrapper">
   <div class="card-panel add-boardgame">
-    <form method="POST" action="{{ url_for('add_boardgame') }}">
+    <form method="POST" action="{{ url_for('edit_boardgame', boardgame_id=boardgame._id) }}">
       <a href="{{ url_for('get_boardgames') }}" id="back-to-boardgames" class="black-text">
         <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
           ><i class="fas fa-chevron-left"></i>
         <span>back to boardgames</span>
       </a>
-      <h4 class="center add-game-heading teal-text">Add a boardgame</h4>
+      <h4 class="center add-game-heading teal-text">Edit boardgame</h4>
       <div class="input-field">
         <input
-          id="add_boardgame"
-          name="add_boardgame"
+          id="edit_boardgame"
+          name="edit_boardgame"
           type="text"
           minlength="2"
           maxlength="20"
           pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$"
           class="validate"
+          value="{{ boardgame.boardgame }}"
           required
         />
-        <label for="add_boardgame">Boardgame...</label>
+        <label for="editt_boardgame">Boardgame...</label>
       </div>
       <div class="submit-btn-wrapper">
         <button

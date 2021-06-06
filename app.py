@@ -144,19 +144,33 @@ def add_game():
         game['players_scores'] = mapPlayersScores()
         mongo.db.games.insert_one(game)
         
-        flash("Game was added sucessfully!")
+        flash("Game was sucessfully added!")
         return redirect(url_for("get_games"))
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
     return render_template("add_game.html", players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
 
 
+# Function to transform from DB format of 
+# players collection to ideal template
+# def mapEditPlayersScores(p):
+#     edit_players_scores = {
+#         "player": p["player"],
+#         "scores": p["score"]
+#     }
+#     return edit_players_scores
+
+
 @app.route("/edit_game/<game_id>", methods=["GET", "POST"])
 def edit_game(game_id):
-    game = mongo.db.games.find_one({"_id": ObjectId()})
+    game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    edit_players_scores = game["players_scores"]
+    print("Edit player:", edit_players_scores)
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
-    return render_template("edit_game.html", game=game, players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+  
+    return render_template("edit_game.html", game=game, edit_players_scores=edit_players_scores, 
+        players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
 
 
 @app.route("/get_boardgames")
@@ -173,9 +187,24 @@ def add_boardgame():
             "created_by": session["user"],
         }
         mongo.db.boardgames.insert_one(boardgame)
-        flash("Boardgame was added sucessfully!")
+        flash("Boardgame was sucessfully added!")
         return redirect(url_for("get_boardgames"))
     return render_template("add_boardgame.html")
+
+
+@app.route("/edit_boardgame/<boardgame_id>", methods=["GET", "POST"])
+def edit_boardgame(boardgame_id):
+    if request.method == "POST":
+        submit_bg = {
+            "boardgame": request.form.get("edit_boardgame"),
+            "created_by": session["user"],
+        }
+        mongo.db.boardgames.update({"_id":ObjectId(boardgame_id)}, submit_bg)
+        flash("Boardgame was sucessfully edited!")
+        return redirect(url_for("get_boardgames"))
+
+    boardgame = mongo.db.boardgames.find_one({"_id": ObjectId(boardgame_id)})
+    return render_template("edit_boardgame.html", boardgame=boardgame)
 
 
 @app.route("/get_players")
@@ -195,6 +224,21 @@ def add_player():
         flash("Player was added sucessfully!")
         return redirect(url_for("get_players"))
     return render_template("add_player.html")
+
+
+@app.route("/edit_player/<player_id>", methods=["GET", "POST"])
+def edit_player(player_id):
+    if request.method == "POST":
+        submit_bg = {
+            "player": request.form.get("edit_player"),
+            "created_by": session["user"],
+        }
+        mongo.db.players.update({"_id":ObjectId(player_id)}, submit_bg)
+        flash("Player was sucessfully edited!")
+        return redirect(url_for("get_players"))
+
+    player = mongo.db.players.find_one({"_id": ObjectId(player_id)})
+    return render_template("edit_player.html", player=player)
 
 
 if __name__ == "__main__":

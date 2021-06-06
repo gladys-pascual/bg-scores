@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -8,9 +8,8 @@ input::-webkit-inner-spin-button {
   opacity: 1;
   height: 20px;
 }
-input[type=number] {
+input[type="number"] {
   opacity: 1;
-  
 }
 
 /*********** Reusable styles  *************/
@@ -56,7 +55,8 @@ body {
   padding-left: 4px;
 }
 
-h3, h4{
+h3,
+h4 {
   text-transform: uppercase;
   font-weight: 300;
   letter-spacing: 4px;
@@ -67,37 +67,49 @@ input:focus::placeholder {
 }
 
 /* Buttons */
-.edit-btn, .delete-btn{
+.edit-btn,
+.delete-btn {
   padding: 0 10px;
 }
 
-.edit-btn .edit-icon, .delete-btn .delete-icon{
+.edit-btn .edit-icon,
+.delete-btn .delete-icon {
   font-size: 1em;
 }
 
-.submit-btn, .add-game-btn, .add-bg-btn, .add-player-btn{
+.submit-btn,
+.add-game-btn,
+.add-bg-btn,
+.add-player-btn {
   letter-spacing: 2px;
   font-weight: 300;
 }
 
-.add-game-btn, .add-bg-btn, .add-player-btn{
+.add-game-btn,
+.add-bg-btn,
+.add-player-btn {
   margin-top: 40px;
   font-size: 20px;
 }
 
-.add-game-btn:hover, .edit-btn:hover, .delete-btn:hover, .submit-btn:hover, .add-bg-btn:hover, .add-player-btn:hover {
+.add-game-btn:hover,
+.edit-btn:hover,
+.delete-btn:hover,
+.submit-btn:hover,
+.add-bg-btn:hover,
+.add-player-btn:hover {
   background-color: #4db6ac !important;
   color: white;
 }
 
 /* Flash messages */
-.flashes h5{
+.flashes h5 {
   line-height: 2;
   letter-spacing: 2px;
   font-weight: 300;
 }
 
-.flashes{
+.flashes {
   margin-bottom: 0px;
 }
 
@@ -162,18 +174,18 @@ a:-webkit-any-link:focus-visible {
   color: white;
 }
 
-.username-sidenav{
+.username-sidenav {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 300;
 }
 
 /* Register and Log In*/
-.register-login-form{
+.register-login-form {
   padding-top: 8vh;
 }
 
-.register-login-heading{
+.register-login-heading {
   text-transform: uppercase;
   letter-spacing: 4px;
   font-weight: 300;
@@ -184,94 +196,98 @@ a:-webkit-any-link:focus-visible {
   font-size: 1.5rem;
 }
 
-#username, #password {
+#username,
+#password {
   color: white;
   border-bottom: 1px solid white;
 }
 
-.submit-btn{
+.submit-btn {
   display: flex;
   justify-content: center;
 }
 
-.submit-btn-text{
+.submit-btn-text {
   letter-spacing: 2px;
 }
 
-.register-icon{
+.register-icon {
   padding-left: 8px;
 }
 
 /* Games.html */
-.game-cards-wrapper{
-  display:flex;
+.game-cards-wrapper {
+  display: flex;
   justify-content: center;
   margin-top: 40px;
 }
 
-.game-cards{
+.game-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.games{
+.games {
   width: 500px;
   margin: 20px;
 }
 
-.card-header{
-  display:flex;
+.card-header {
+  display: flex;
   justify-content: space-between;
   align-content: center;
   padding-left: 2vw;
 }
 
-.game-date{
+.game-date {
   font-style: italic;
   margin: 6px;
   align-items: center;
 }
 
-.card-header p{
+.card-header p {
   margin-bottom: 0px;
 }
 
-.player-gap{
+.player-gap {
   padding-left: 4px;
 }
 
-.player-and-score{
+.player-and-score {
   display: flex;
   justify-content: space-between;
   padding: 0 2vw;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 300;
 }
 
 /* add games */
-.add-game-wrapper{
+.add-game-wrapper {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 40px;
 }
 
-#add_game{
+#add_game {
   width: 700px;
 }
 
-.add-game-heading{
+.add-game-heading {
   padding: 8px;
-} 
+}
 
-.choose-bg{
+.choose-bg {
   margin-bottom: 0px;
 }
 
-.dropdown-icon .prefix{
-  padding-top:0px;
+.dropdown-icon .prefix {
+  padding-top: 0px;
 }
 
-.player-name{
+.player-name {
   font-size: medium;
 }
 
@@ -279,63 +295,83 @@ a:-webkit-any-link:focus-visible {
   padding-right: 8px;
 }
 
-.submit-btn-wrapper{
+.submit-btn-wrapper {
   display: flex;
   justify-content: flex-end;
 }
 
-.player-name-wrapper{
+.player-name-wrapper {
   margin-top: 12px;
 }
 
 /* boardgames, players */
-.edit-button{
- display: flex;
- justify-content: flex-end;
+.edit-button {
+  display: flex;
+  justify-content: flex-end;
 }
 
- /* add boardgame, add player */
- #back-to-games, #back-to-boardgames, #back-to-players{
+.boardgames-list,
+.players-list {
+  font-size: 1.5em;
+  text-transform: uppercase;
   font-weight: 300;
- }
+  letter-spacing: 4px;
+}
+
+.bg-players-card {
+  width: 300px;
+  margin: 20px;
+  padding: 8px;
+}
 
 
- #back-to-games:hover, #back-to-boardgames:hover, #back-to-players:hover{
+/* add boardgame, add player */
+#back-to-games,
+#back-to-boardgames,
+#back-to-players {
+  font-weight: 300;
+}
+
+#back-to-games:hover,
+#back-to-boardgames:hover,
+#back-to-players:hover {
   color: #009688 !important;
- }
+}
 
- .add-boardgame-wrapper, .add-player-wrapper{
-   display: flex;
-   justify-content: center;
-   margin-top: 40px;
- }
+.add-boardgame-wrapper,
+.add-player-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
 
- .add-boardgame, .add-player{
-   width: 500px;
- }
+.add-boardgame,
+.add-player {
+  width: 500px;
+}
 
 /* Media queries */
 @media screen and (max-width: 800px) {
-  #add_game{
+  #add_game {
     width: 500px;
   }
- }
+}
 
 @media screen and (max-width: 500px) {
-  .games{
+  .games {
     width: 300px;
     margin: 10px;
   }
 
-  .board-game-heading{
+  .board-game-heading {
     font-size: 1.5em;
   }
 
-  #add_game{
+  #add_game {
     width: 350px;
   }
 
-  #select-options-cd605545-dd9e-aefb-6a0d-caa49848fe67{
+  #select-options-cd605545-dd9e-aefb-6a0d-caa49848fe67 {
     width: 200px;
   }
 
@@ -343,12 +379,17 @@ a:-webkit-any-link:focus-visible {
     max-width: 30px;
   }
 
-  .modal .datepicker-modal .open{
+  .modal .datepicker-modal .open {
     margin: 0px;
   }
 
-  .add-boardgame, .add-player{
+  .add-boardgame,
+  .add-player {
     width: 300px;
   }
- }
 
+  .boardgames-list,
+  .players-list {
+    font-size: 1em;
+  }
+}

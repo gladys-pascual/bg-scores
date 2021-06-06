@@ -1,33 +1,33 @@
 {% extends "base.html" %} 
 {% block content %}
-<div class="add-bg-btn-wrapper center">
-  <a
-    href="{{ url_for('add_boardgame') }}"
-    class="
-      modal-close
-      waves-effect waves-light
-      btn-flat
-      add-bg-btn
-      teal
-      lighten-4
-    "
-    >Add a board game <i class="fas fa-dice-d6 prefix"></i></a
-  >
-</div>
-<div class="game-cards-wrapper">
-  <div class="game-cards">
-    {% for boardgame in boardgames %}
-    <div class="games card-panel">
-      <div class="edit-button">
-        <a
-          href="#"
-          class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
-          ><i class="fas fa-edit edit-icon"></i
-        ></a>
-      </div>
-      <h4 class="board-game-heading center">{{ boardgame.boardgame }}</h4>
-    </div>
-    {% endfor %}
+  <div class="add-bg-btn-wrapper center">
+    <a
+      href="{{ url_for('add_boardgame') }}"
+      class="
+        modal-close
+        waves-effect waves-light
+        btn-flat
+        add-bg-btn
+        teal
+        lighten-4
+      "
+      >Add a board game <i class="fas fa-dice-d6 prefix"></i></a
+    >
   </div>
-</div>
+  <div class="game-cards-wrapper">
+    <div class="game-cards">
+      {% for boardgame in boardgames %}
+      <div class="bg-players-card card-panel">
+        <div class="edit-button">
+          <a
+            href="{{ url_for('edit_boardgame', boardgame_id=boardgame._id) }}"
+            class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
+            ><i class="fas fa-edit edit-icon"></i
+          ></a>
+        </div>
+        <p class="boardgames-list center">{{ boardgame.boardgame }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
