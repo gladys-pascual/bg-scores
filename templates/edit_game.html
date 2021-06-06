@@ -2,21 +2,25 @@
 {% block content %}
   <section class="add-game-wrapper">
     <div id="add_game" class="card-panel">
-      <form method="POST" action="{{ url_for('add_game') }}">
-        <a href="{{ url_for('get_games') }}" id="back-to-games" class="black-text">
-          <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
-            ><i class="fas fa-chevron-left"></i>
-          <span>back to games</span>
-        </a>
-        <h4 class="center add-game-heading teal-text">Add a game</h4>
+      <a href="{{ url_for('get_games') }}" id="back-to-games" class="black-text">
+        <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
+          ><i class="fas fa-chevron-left"></i>
+        <span>back to games</span>
+      </a>
+      <form method="POST" action="{{ url_for('edit_game', game_id=game._id) }}">
+        <h4 class="center add-game-heading teal-text">Edit game</h4>
         <!-- Choose a boardgame  -->
         <div class="row choose-bg">
           <div class="input-field col s12 m10 offset-m1">
             <i class="fas fa-dice-d6 prefix"></i>
             <select id="boardgame" name="boardgame" required>
-              <option value="" disabled selected>Choose a boardgame</option>
+              <option value="" disabled>Choose a boardgame</option>
               {% for boardgame in boardgames %}
-                <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
+                {% if boardgame._id == game.boardgame %}
+                  <option value="{{ boardgame._id }}" selected>{{ boardgame.boardgame }}</option>
+                {% else %}
+                  <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
+                {% endif %}
               {% endfor %}
             </select>
             <label for="boardgame" >Boardgame</label>
@@ -45,12 +49,20 @@
             <select multiple id="player" name="player" class="validate" required>
               <option value="" disabled>Choose a player</option>
               {% for player in players %}
-                <option value="{{ player._id }}">{{ player.player }}</option>
+                {% for edit_player_score in edit_players_scores %}
+                  {% if player._id == edit_players_scores.player %}
+                    <option value="{{ player._id }}" selected>{{ edit_players_scores.player }}</option>
+                  {% else %}
+                    <option value="{{ player._id }}">{{ player.player }}</option>
+                  {% endif%}
+                {% endfor %}
               {% endfor %}
             </select>
             <label for="player" >Player</label>
           </div>  
         </div>
+
+
 
         <div class="row" id="selected-players">
         </div>
