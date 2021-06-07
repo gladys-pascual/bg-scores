@@ -350,6 +350,25 @@ a:-webkit-any-link:focus-visible {
   width: 500px;
 }
 
+/* Delete confirmation */
+.delete-confirmation-wrapper{
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.delete-confirmation{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cancel-delete-btn,
+.confirm-delete-btn{
+  margin: 12px;
+}
+
+
 /* Media queries */
 @media screen and (max-width: 800px) {
   #add_game {
@@ -391,5 +410,15 @@ a:-webkit-any-link:focus-visible {
   .boardgames-list,
   .players-list {
     font-size: 1em;
+  }
+  
+  .delete-text{
+    text-align: center;
+    line-height: 1.5em;
+  }
+
+  .delete-buttons{
+    display: flex;
+    flex-direction: column;
   }
 }
