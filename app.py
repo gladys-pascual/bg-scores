@@ -173,6 +173,19 @@ def edit_game(game_id):
         players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
 
 
+@app.route("/delete_game_confirmation/<game_id>")
+def delete_game_confirmation(game_id):
+    game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    return render_template("delete_game_confirmation.html", game=game)
+
+
+@app.route("/delete_game/<game_id>")
+def delete_game(game_id):
+    mongo.db.games.remove({"_id": ObjectId(game_id)})
+    flash("Game successfully deleted.")
+    return redirect(url_for("get_games"))
+
+
 @app.route("/get_boardgames")
 def get_boardgames():
     boardgames = list(mongo.db.boardgames.find())
@@ -187,7 +200,7 @@ def add_boardgame():
             "created_by": session["user"],
         }
         mongo.db.boardgames.insert_one(boardgame)
-        flash("Boardgame was sucessfully added!")
+        flash("Boardgame was sucessfully added.")
         return redirect(url_for("get_boardgames"))
     return render_template("add_boardgame.html")
 
