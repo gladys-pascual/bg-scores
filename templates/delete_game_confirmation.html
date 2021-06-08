@@ -5,8 +5,8 @@
     <div class="delete-confirmation card-panel">
       <h4 class="delete-text">Are you sure?</h4>
       <div class="delete-buttons">
-        <a href="{{ url_for('get_games') }}" class="modal-close waves-effect waves-green btn cancel-delete-btn teal lighten-3">No, don't delete game</a>
-        <a href="{{ url_for('delete_game', game_id=game._id) }}" class="modal-close waves-effect waves-green btn confirm-delete-btn">Yes, delete the game</a>
+        <a href="{{ url_for('get_games') }}" class="modal-close waves-effect waves btn cancel-delete-btn red lighten-3">No, don't delete game</a>
+        <a href="{{ url_for('delete_game', game_id=game._id) }}" class="modal-close waves-effect waves btn confirm-delete-btn teal lighten-2">Yes, delete the game</a>
       </div>
     </div>  
   </div>

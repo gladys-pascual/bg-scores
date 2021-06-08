@@ -13,7 +13,7 @@
         <div class="row choose-bg">
           <div class="input-field col s12 m10 offset-m1">
             <i class="fas fa-dice-d6 prefix"></i>
-            <select id="boardgame" name="boardgame" required>
+            <select id="edit_bg" name="edit_bg" required>
               <option value="" disabled>Choose a boardgame</option>
               {% for boardgame in boardgames %}
                 {% if boardgame._id == game.boardgame %}
@@ -23,7 +23,7 @@
                 {% endif %}
               {% endfor %}
             </select>
-            <label for="boardgame" >Boardgame</label>
+            <label for="edit_bg" >Boardgame</label>
           </div>  
         </div>
 
@@ -32,39 +32,53 @@
           <div class="input-field col s12 m10 offset-m1 small">
             <i class="fas fa-calendar-alt prefix"></i>
             <input
-              id="game_date"
-              name="game_date"
+              id="edit_game_date"
+              name="edit_game_date"
               class="datepicker validate"
               type="text"
               required
+              value="{{ game.game_date }}"
             ></input>
-            <label class="game-date-label" for="game_date">Game Date</label>
+            <label class="game-date-label" for="edit_game_date">Game Date</label>
           </div>
         </div>
 
         <!-- Choose a player  --> 
         <div class="row" >
-          <div id="players" class="input-field col s12 m10 offset-m1 player">
+          <div id="edit-players" class="input-field col s12 m10 offset-m1 player">
             <i class="fas fa-user prefix dropdown-icon"></i>
-            <select multiple id="player" name="player" class="validate" required>
+            <select multiple id="edit_p" name="edit_p" class="validate" required>
               <option value="" disabled>Choose a player</option>
               {% for player in players %}
-                {% for edit_player_score in edit_players_scores %}
-                  {% if player._id == edit_players_scores.player %}
-                    <option value="{{ player._id }}" selected>{{ edit_players_scores.player }}</option>
-                  {% else %}
-                    <option value="{{ player._id }}">{{ player.player }}</option>
-                  {% endif%}
-                {% endfor %}
+                {% if player.selected %}
+                  <option value="{{ player._id }}" selected>{{ player.player }}</option>
+                {% else %}
+                  <option value="{{ player._id }}">{{ player.player }}</option>
+                {% endif%}
               {% endfor %}
             </select>
-            <label for="player" >Player</label>
+            <label for="edit_p" >Player</label>
           </div>  
         </div>
 
-
-
-        <div class="row" id="selected-players">
+        <div class="row" id="edit-selected-players">
+          {% for player in edit_players_scores %}
+            <div class="col s6 offset-m2 player-name-wrapper">
+              <p class="player-name"><i class="far fa-user prefix"></i>{{ player.name }}</p>
+            </div>
+            <div class="input-field col s6 m2 score">
+              <input
+                id="edit_score"
+                name="edit_score"
+                min="0"
+                type="number" 
+                class="validate" 
+                required
+                value="{{ player.score }}"
+                />
+              <label for="edit_score">Score</label>	
+            </div>
+          {% endfor %}
         </div>
 
         <div class="submit-btn-wrapper">

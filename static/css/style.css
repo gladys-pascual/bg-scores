@@ -368,6 +368,14 @@ a:-webkit-any-link:focus-visible {
   margin: 12px;
 }
 
+.cancel-delete-btn:hover{
+  background-color: #ef5350 !important;
+}
+
+.confirm-delete-btn:hover{
+  background-color: #009688 !important;
+}
+
 
 /* Media queries */
 @media screen and (max-width: 800px) {
