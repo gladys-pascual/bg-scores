@@ -204,10 +204,11 @@ def edit_game(game_id):
         return redirect(url_for("get_games"))
 
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    game_date = game["game_date"].strftime('%d %b %Y')
     edit_players_scores = game["players_scores"]
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
-    return render_template("edit_game.html", game=game, edit_players_scores=mapSelectedPlayersScores(players, edit_players_scores),
+    return render_template("edit_game.html", game=game, game_date=game_date, edit_players_scores=mapSelectedPlayersScores(players, edit_players_scores),
                            players=mapSelectedPlayers(players, list(mapToPlayerIds(edit_players_scores))), boardgames=map(mapBoardgame, boardgames))
 
 
