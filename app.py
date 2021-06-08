@@ -1,5 +1,6 @@
 import os
 from copy import copy
+from datetime import datetime
 from flask import (Flask, flash, render_template,
                    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
@@ -45,6 +46,9 @@ def mapBoardgame(bg):
 def mapGame(game):
     players = list(mongo.db.players.find())
     boardgames = list(mongo.db.boardgames.find())
+    
+    game["game_date"] = game["game_date"].strftime('%d %b %Y')
+    
     for bg in boardgames:
         if str(bg["_id"]) == game["boardgame"]:
             game["game_name"] = bg["boardgame"]
@@ -53,10 +57,8 @@ def mapGame(game):
         for bg_player in game["players_scores"]:
             if str(p["_id"]) == bg_player["player"]:
                 bg_player["player_name"] = p["player"]
+    
     return game
-
-
-
 
 
 # Function that adds selected (true/false) property to all players
@@ -93,7 +95,7 @@ def mapSelectedPlayersScores(players, selected_players):
 @app.route("/get_games")
 def get_games():
     if session:
-        games = mongo.db.games.find()
+        games = list(mongo.db.games.find().sort("game_date", -1))
         players = list(mongo.db.players.find())
         boardgames = list(mongo.db.boardgames.find())
         return render_template("games.html",
@@ -171,7 +173,7 @@ def add_game():
     if request.method == "POST":
         game = {
             "boardgame": request.form.get("boardgame"),
-            "game_date": request.form.get("game_date"),
+            "game_date": datetime.strptime(request.form.get('game_date'), '%d %b %Y'),
             "created_by": session["user"],
         }
         scores = request.form.getlist("score")
@@ -191,7 +193,7 @@ def edit_game(game_id):
     if request.method == "POST":
         edit_game = {
             "boardgame": request.form.get("edit_bg"),
-            "game_date": request.form.get("edit_game_date"),
+            "game_date": datetime.strptime(request.form.get("edit_game_date"), '%d %b %Y'),
             "created_by": session["user"],
         }
         edit_players = request.form.getlist("edit_p")
