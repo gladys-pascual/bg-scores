@@ -1,5 +1,6 @@
 import os
-from flask import (Flask, flash, render_template, 
+from copy import copy
+from flask import (Flask, flash, render_template,
                    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -19,7 +20,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
-# Function to transform from DB format of 
+# Function to transform from DB format of
 # players collection to ideal template
 def mapPlayer(p):
     updated_player = {
@@ -29,7 +30,7 @@ def mapPlayer(p):
     return updated_player
 
 
-# Function to transform from DB format of 
+# Function to transform from DB format of
 # boardgames collection to ideal template
 def mapBoardgame(bg):
     updated_boardgame = {
@@ -55,19 +56,37 @@ def mapGame(game):
     return game
 
 
-# Function that creates the players_scores array
-# that will be added to the database
-def mapPlayersScores():
-    scores = request.form.getlist("score")
-    players = request.form.getlist("player")
-    players_scores = []
-    for i in range(len(scores)):
-        players_scores.append({
-            "player": players[i],
-            "score": scores[i],
-            "isWinner": max(scores) == scores[i]
-        })
-    return players_scores
+
+
+
+# Function that adds selected (true/false) property to all players
+# to use in pre-selecting select element
+def mapSelectedPlayers(players, selected_player_ids):
+    updated_players = []
+    for i in range(len(players)):
+        updated_player = mapPlayer(players[i])
+        updated_player['selected'] = True if updated_player['_id'] in selected_player_ids else False
+        updated_players.append(updated_player)
+
+    return updated_players
+
+
+# Function that maps players object list to player ids list
+def mapToPlayerIds(players):
+    return map(lambda p: p['player'], players)
+
+
+# Function that loops through selected_players
+# find selected_player in players then add name to it
+def mapSelectedPlayersScores(players, selected_players):
+    players_name_dict = {
+        str(players[i]['_id']): players[i]['player'] for i in range(0, len(players))}
+    updated_selected_players = []
+    for i in range(len(selected_players)):
+        updated_selected_player = copy(selected_players[i])
+        updated_selected_player['name'] = players_name_dict[updated_selected_player['player']]
+        updated_selected_players.append(updated_selected_player)
+    return updated_selected_players
 
 
 @app.route("/")
@@ -77,8 +96,9 @@ def get_games():
         games = mongo.db.games.find()
         players = list(mongo.db.players.find())
         boardgames = list(mongo.db.boardgames.find())
-        return render_template("games.html", 
-            games=map(mapGame, games), players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+        return render_template("games.html",
+                               games=map(mapGame, games), players=map(mapPlayer, players), 
+                               boardgames=map(mapBoardgame, boardgames))
     else:
         return redirect(url_for("login"))
 
@@ -107,13 +127,13 @@ def login():
     if request.method == "POST":
         # Check if username exists in the database
         existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})    
+            {"username": request.form.get("username").lower()})
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
-                existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    return redirect(url_for("get_games"))
+                    existing_user["password"], request.form.get("password")):
+                session["user"] = request.form.get("username").lower()
+                return redirect(url_for("get_games"))
             else:
                 # Invalid password match
                 flash("Invalid username and/or password.")
@@ -133,6 +153,19 @@ def logout():
     return redirect(url_for("login"))
 
 
+# Function that creates the players_scores array
+# that will be added to the database
+def mapPlayersScores(players, scores):
+    players_scores = []
+    for i in range(len(scores)):
+        players_scores.append({
+            "player": players[i],
+            "score": scores[i],
+            "isWinner": max(scores) == scores[i]
+        })
+    return players_scores
+
+
 @app.route("/add_game", methods=["GET", "POST"])
 def add_game():
     if request.method == "POST":
@@ -141,9 +174,11 @@ def add_game():
             "game_date": request.form.get("game_date"),
             "created_by": session["user"],
         }
-        game['players_scores'] = mapPlayersScores()
+        scores = request.form.getlist("score")
+        players = request.form.getlist("player")
+        game['players_scores'] = mapPlayersScores(players, scores)
         mongo.db.games.insert_one(game)
-        
+
         flash("Game was sucessfully added!")
         return redirect(url_for("get_games"))
     players = list(mongo.db.players.find().sort("player", 1))
@@ -151,26 +186,27 @@ def add_game():
     return render_template("add_game.html", players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
 
 
-# Function to transform from DB format of 
-# players collection to ideal template
-# def mapEditPlayersScores(p):
-#     edit_players_scores = {
-#         "player": p["player"],
-#         "scores": p["score"]
-#     }
-#     return edit_players_scores
-
-
 @app.route("/edit_game/<game_id>", methods=["GET", "POST"])
 def edit_game(game_id):
+    if request.method == "POST":
+        edit_game = {
+            "boardgame": request.form.get("edit_bg"),
+            "game_date": request.form.get("edit_game_date"),
+            "created_by": session["user"],
+        }
+        edit_players = request.form.getlist("edit_p")
+        edit_scores = request.form.getlist("edit_score")
+        edit_game['players_scores'] = mapPlayersScores(edit_players, edit_scores)
+        mongo.db.games.update({"_id": ObjectId(game_id)} ,edit_game)
+        flash("Game was sucessfully edited!")
+        return redirect(url_for("get_games"))
+
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
     edit_players_scores = game["players_scores"]
-    print("Edit player:", edit_players_scores)
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
-  
-    return render_template("edit_game.html", game=game, edit_players_scores=edit_players_scores, 
-        players=map(mapPlayer, players), boardgames=map(mapBoardgame, boardgames))
+    return render_template("edit_game.html", game=game, edit_players_scores=mapSelectedPlayersScores(players, edit_players_scores),
+                           players=mapSelectedPlayers(players, list(mapToPlayerIds(edit_players_scores))), boardgames=map(mapBoardgame, boardgames))
 
 
 @app.route("/delete_game_confirmation/<game_id>")
@@ -212,7 +248,7 @@ def edit_boardgame(boardgame_id):
             "boardgame": request.form.get("edit_boardgame"),
             "created_by": session["user"],
         }
-        mongo.db.boardgames.update({"_id":ObjectId(boardgame_id)}, submit_bg)
+        mongo.db.boardgames.update({"_id": ObjectId(boardgame_id)}, submit_bg)
         flash("Boardgame was sucessfully edited!")
         return redirect(url_for("get_boardgames"))
 
@@ -246,7 +282,7 @@ def edit_player(player_id):
             "player": request.form.get("edit_player"),
             "created_by": session["user"],
         }
-        mongo.db.players.update({"_id":ObjectId(player_id)}, submit_bg)
+        mongo.db.players.update({"_id": ObjectId(player_id)}, submit_bg)
         flash("Player was sucessfully edited!")
         return redirect(url_for("get_players"))
 
