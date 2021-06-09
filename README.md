@@ -1,6 +1,6 @@
 <h1 align="center">BG-scores</h1>
 
-[View the live project here.]()
+[View the live project here.](https://bg-scores.herokuapp.com/)
 
 add description of the website
 
@@ -14,24 +14,23 @@ add description of the website
 <hr>
 
 ### User stories
-
-- As a user, I want to be able to create an account.
-- As a user, I want to be able to log in and out of my account.
-  - Log in:
-    - Once the page is loaded, it checks if session cookie has something in it. If it's empty, it loads login. If it has something, it loads get_games
-- As a user, I want to be able to record the games that I played, by
-    - Adding a board game from a list of pre-added board games.
-    - Seeing a list of all my board games
-    - Editing a name of a board game
-    - Deleting a board game
-- As a user, I want to be able to manage the board games in my account, by:
-    - Adding a board game
-    - Seeing a list of all my board games
-    - Editing a name of a board game
-- As a user, I want to be able to manage the players in my account, by:
-    - Adding a player
-    - Seeing a list of all the players
-    - Editing a player's name
+- As a potential user, I want to be able to register for an account.
+- As a current user, I want to be able to log in and out of my account.
+- As a user, I want to be able to record (create) the games that I played. The game information would include: 
+  - Boardgame
+  - Date of when the game was played
+  - The players and their scores
+- As a user, I want to see all the games I played in the homepage (read).
+- As a user, I want to be able to edit the game I played (update).
+- As a user, I want to be able to delete a game I played (delete.
+- As a user, I want to be able to manage the board games in my account, by being able to:
+  - Create a boardgame
+  - See a list of all the boardgames I created
+  - Edit the name of a boardgame I created
+- As a user, I want to be able to manage the players in my account, by being able to:
+  - Create a player
+  - See a list of all the players I created
+  - Edit the name of a player I created
 
 ### Design
 
@@ -57,16 +56,19 @@ add description of the website
 ## Features
 <hr>
 
-### As a user, I want to be able to create an account.
+### As a potential user, I want to be able to register for an account.
 
 <br>
 
 
-### As a user, I want to be able to log in and out of my account.
-
+### As a current user, I want to be able to log in of my account.
+- Once the page is loaded, the function `get_games()` checks if session cookie storage has a value. 
+  - If there is sometthing stored in the session cookie, the homepage is loaded.
+  - If the session cookie storage is empty, the login page is loaded. 
+  
 <br>
 
-### As a user, I want to be able to log in and out of my account.
+### As a user, I want to be able to log out of my account.
 
 <br>
 
