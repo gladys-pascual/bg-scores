@@ -154,7 +154,10 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
     scores = request.form.getlist("score")
     scores_int = [int(score) for score in scores]
     ```
-
+- edit game, URL has game_id. If this game_id is incorrect (random digits put by user), a 500 error is given and page doesn't handle it. 
+  - Write a function that will handle 500 error
+  - Render html template
+  - Along with this, write a handler for 404 too
 ### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
 
 1. xxx
