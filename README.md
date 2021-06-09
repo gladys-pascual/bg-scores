@@ -158,6 +158,17 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
   - Write a function that will handle 500 error
   - Render html template
   - Along with this, write a handler for 404 too
+
+- Even if the user is logged out, if the user has a url of edit_game, for example http://0.0.0.0:5000/edit_game/60bfd8c0e67d2a5f4ac05115 - user is able to access the edit game and ultimately be able to edit the game without being logged in. Anyone who has the link can then edit the game and ruin the database. As a precaution:
+  - Only show pages if user is logged in
+  - This code was added as an additional defence on each page()
+    ```python
+    # Check if there is a user data saved in the cookie session storage
+    # If not, redirect to login page
+    if not session.get("user"):
+        return redirect(url_for("login"))
+    ```
+
 ### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
 
 1. xxx

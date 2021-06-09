@@ -172,6 +172,11 @@ def mapPlayersScores(players, scores):
 
 @app.route("/add_game", methods=["GET", "POST"])
 def add_game():
+    # Check if there is a user data saved in the cookie session storage
+    # If not, redirect to login page
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         game = {
             "boardgame": request.form.get("boardgame"),
@@ -193,6 +198,9 @@ def add_game():
 
 @app.route("/edit_game/<game_id>", methods=["GET", "POST"])
 def edit_game(game_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+    
     if request.method == "POST":
         edit_game = {
             "boardgame": request.form.get("edit_bg"),
@@ -218,12 +226,18 @@ def edit_game(game_id):
 
 @app.route("/delete_game_confirmation/<game_id>")
 def delete_game_confirmation(game_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
     return render_template("delete_game_confirmation.html", game=game)
 
 
 @app.route("/delete_game/<game_id>")
 def delete_game(game_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     mongo.db.games.remove({"_id": ObjectId(game_id)})
     flash("Game successfully deleted.")
     return redirect(url_for("get_games"))
@@ -231,12 +245,18 @@ def delete_game(game_id):
 
 @app.route("/get_boardgames")
 def get_boardgames():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
     return render_template("boardgames.html", boardgames=map(mapBoardgame, boardgames))
 
 
 @app.route("/add_boardgame", methods=["GET", "POST"])
 def add_boardgame():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         boardgame = {
             "boardgame": request.form.get("add_boardgame"),
@@ -250,6 +270,9 @@ def add_boardgame():
 
 @app.route("/edit_boardgame/<boardgame_id>", methods=["GET", "POST"])
 def edit_boardgame(boardgame_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         submit_bg = {
             "boardgame": request.form.get("edit_boardgame"),
@@ -265,12 +288,18 @@ def edit_boardgame(boardgame_id):
 
 @app.route("/get_players")
 def get_players():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     players = list(mongo.db.players.find().sort("player", 1))
     return render_template("players.html", players=map(mapPlayer, players))
 
 
 @app.route("/add_player", methods=["GET", "POST"])
 def add_player():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         player = {
             "player": request.form.get("add_player"),
@@ -284,6 +313,9 @@ def add_player():
 
 @app.route("/edit_player/<player_id>", methods=["GET", "POST"])
 def edit_player(player_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         submit_bg = {
             "player": request.form.get("edit_player"),
@@ -295,7 +327,7 @@ def edit_player(player_id):
 
     player = mongo.db.players.find_one({"_id": ObjectId(player_id)})
     return render_template("edit_player.html", player=player)
-
+    
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
