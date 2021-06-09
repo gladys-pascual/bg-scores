@@ -16,7 +16,9 @@
             <select id="boardgame" name="boardgame" required>
               <option value="" disabled selected>Choose a boardgame</option>
               {% for boardgame in boardgames %}
-                <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
+                {% if session.user|lower == boardgame.created_by|lower %}
+                  <option value="{{ boardgame._id }}">{{ boardgame.boardgame }}</option>
+                {% endif %}
               {% endfor %}
             </select>
             <label for="boardgame" >Boardgame</label>
@@ -45,7 +47,9 @@
             <select multiple id="player" name="player" class="validate" required>
               <option value="" disabled>Choose a player</option>
               {% for player in players %}
-                <option value="{{ player._id }}">{{ player.player }}</option>
+                {% if session.user|lower == player.created_by|lower %}
+                  <option value="{{ player._id }}">{{ player.player }}</option>
+                {% endif %}
               {% endfor %}
             </select>
             <label for="player" >Player</label>

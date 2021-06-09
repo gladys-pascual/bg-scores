@@ -26,7 +26,8 @@ mongo = PyMongo(app)
 def mapPlayer(p):
     updated_player = {
         "_id": str(p["_id"]),
-        "player": p["player"]
+        "player": p["player"],
+        "created_by": p["created_by"]
     }
     return updated_player
 
@@ -36,7 +37,8 @@ def mapPlayer(p):
 def mapBoardgame(bg):
     updated_boardgame = {
         "_id": str(bg["_id"]),
-        "boardgame": bg["boardgame"]
+        "boardgame": bg["boardgame"],
+        "created_by": bg["created_by"]
     }
     return updated_boardgame
 
@@ -177,8 +179,9 @@ def add_game():
             "created_by": session["user"],
         }
         scores = request.form.getlist("score")
+        scores_int = [int(score) for score in scores]
         players = request.form.getlist("player")
-        game['players_scores'] = mapPlayersScores(players, scores)
+        game['players_scores'] = mapPlayersScores(players, scores_int)
         mongo.db.games.insert_one(game)
 
         flash("Game was sucessfully added!")
@@ -198,7 +201,8 @@ def edit_game(game_id):
         }
         edit_players = request.form.getlist("edit_p")
         edit_scores = request.form.getlist("edit_score")
-        edit_game['players_scores'] = mapPlayersScores(edit_players, edit_scores)
+        edit_scores_int = [int(score) for score in edit_scores]
+        edit_game['players_scores'] = mapPlayersScores(edit_players, edit_scores_int)
         mongo.db.games.update({"_id": ObjectId(game_id)} ,edit_game)
         flash("Game was sucessfully edited!")
         return redirect(url_for("get_games"))
@@ -227,7 +231,7 @@ def delete_game(game_id):
 
 @app.route("/get_boardgames")
 def get_boardgames():
-    boardgames = list(mongo.db.boardgames.find())
+    boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
     return render_template("boardgames.html", boardgames=map(mapBoardgame, boardgames))
 
 
@@ -261,7 +265,7 @@ def edit_boardgame(boardgame_id):
 
 @app.route("/get_players")
 def get_players():
-    players = list(mongo.db.players.find())
+    players = list(mongo.db.players.find().sort("player", 1))
     return render_template("players.html", players=map(mapPlayer, players))
 
 

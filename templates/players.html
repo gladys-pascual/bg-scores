@@ -17,16 +17,18 @@
   <div class="game-cards-wrapper">
     <div class="game-cards">
       {% for player in players %}
-      <div class="bg-players-card card-panel">
-        <div class="edit-button">
-          <a
-            href="{{ url_for('edit_player', player_id=player._id) }}"
-            class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
-            ><i class="fas fa-edit edit-icon"></i
-          ></a>
-        </div>
-        <p class="players-list center">{{ player.player }}</p>
-      </div>
+        {% if session.user|lower == player.created_by|lower %}
+          <div class="bg-players-card card-panel">
+            <div class="edit-button">
+              <a
+                href="{{ url_for('edit_player', player_id=player._id) }}"
+                class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
+                ><i class="fas fa-edit edit-icon"></i
+              ></a>
+            </div>
+            <p class="players-list center">{{ player.player }}</p>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

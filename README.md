@@ -140,7 +140,18 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 
   
 
+- ensure that only the details loaded by the user is rendered:
+  - session user added
+  - put condition
+  - test if that works
 
+- isWinner is incorrect
+  - root cause - scores being stored as string
+  - convert to string by: 
+    ``` python
+    scores = request.form.getlist("score")
+    scores_int = [int(score) for score in scores]
+    ```
 
 ### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
 
