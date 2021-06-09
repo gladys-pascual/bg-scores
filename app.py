@@ -201,6 +201,7 @@ def edit_game(game_id):
     if not session.get("user"):
         return redirect(url_for("login"))
     
+
     if request.method == "POST":
         edit_game = {
             "boardgame": request.form.get("edit_bg"),
@@ -220,6 +221,11 @@ def edit_game(game_id):
     edit_players_scores = game["players_scores"]
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
+
+    edit_game_creator= game["created_by"]
+    if session.get("user").lower()  !=   edit_game_creator.lower():
+        return render_template("no_access.html")
+
     return render_template("edit_game.html", game=game, game_date=game_date, edit_players_scores=mapSelectedPlayersScores(players, edit_players_scores),
                            players=mapSelectedPlayers(players, list(mapToPlayerIds(edit_players_scores))), boardgames=map(mapBoardgame, boardgames))
 
@@ -230,6 +236,9 @@ def delete_game_confirmation(game_id):
         return redirect(url_for("login"))
 
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    delete_game_creator= game["created_by"]
+    if session.get("user").lower()  !=   delete_game_creator.lower():
+        return render_template("no_access.html")
     return render_template("delete_game_confirmation.html", game=game)
 
 
@@ -237,6 +246,11 @@ def delete_game_confirmation(game_id):
 def delete_game(game_id):
     if not session.get("user"):
         return redirect(url_for("login"))
+
+    game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    delete_game_creator= game["created_by"]
+    if session.get("user").lower()  !=   delete_game_creator.lower():
+        return render_template("no_access.html")
 
     mongo.db.games.remove({"_id": ObjectId(game_id)})
     flash("Game successfully deleted.")
@@ -283,6 +297,10 @@ def edit_boardgame(boardgame_id):
         return redirect(url_for("get_boardgames"))
 
     boardgame = mongo.db.boardgames.find_one({"_id": ObjectId(boardgame_id)})
+    edit_bg_creator= boardgame["created_by"]
+    if session.get("user").lower()  !=   edit_bg_creator.lower():
+        return render_template("no_access.html")
+
     return render_template("edit_boardgame.html", boardgame=boardgame)
 
 
@@ -326,6 +344,10 @@ def edit_player(player_id):
         return redirect(url_for("get_players"))
 
     player = mongo.db.players.find_one({"_id": ObjectId(player_id)})
+    edit_player_creator= player["created_by"]
+    if session.get("user").lower()  !=   edit_player_creator.lower():
+        return render_template("no_access.html")
+
     return render_template("edit_player.html", player=player)
     
 
