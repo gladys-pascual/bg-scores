@@ -159,21 +159,32 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
   - Render html template
   - Along with this, write a handler for 404 too
 
-- Even if the user is logged out, if the user has a url of edit_game, for example http://0.0.0.0:5000/edit_game/60bfd8c0e67d2a5f4ac05115 - user is able to access the edit game and ultimately be able to edit the game without being logged in. Anyone who has the link can then edit the game and ruin the database. As a precaution:
-  - Only show pages if user is logged in
-  - This code was added as an additional defence on each page()
+
+### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
+
+1. If the user has a url of edit or delete game, edit boardgame, or edit player (for example, edit game: http://0.0.0.0:5000/edit_game/60bfd8c0e67d2a5f4ac05115), even if the user is logged out, theu can  access the edit or delete game, edit boardgame, or edit player. This is a risk because: 
+   - Unauthorized user, a user that does not have an account, can manipulate the items.
+   - As a precaution, edit or delete game, edit boardgame, or edit player are only displayed if a user is logged in by checking the session cookie storage. Otherwise, the user will be navigated to the login page. This code was added for this purpose:
     ```python
     # Check if there is a user data saved in the cookie session storage
     # If not, redirect to login page
     if not session.get("user"):
         return redirect(url_for("login"))
     ```
+    <br>
 
-### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
+2. Another potential issue was a user can access another users' data if they have a link that contains the id of the item. To avoid this:
+   - In the edit game, delete game, edit boardgame, or edit player, an additional if statement was added to check if the user stored in the session cookie storage is the same user that created the item. If not, the `no_access.html` is rendered.
 
-1. xxx
-2. xxx
-3. xxx
+    Checks / tests on each below were performed by getting the data from one user, saving the link, logging out, logging in to a different user, then copy pasting the link saved from the previous user, to check if the `no_access.html` would work.
+    - edit game:
+    - delete game:
+    - edit boardgame:
+    - edit player:
+
+3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
+
+4. xxx
 
 ## Deployment
 <hr>

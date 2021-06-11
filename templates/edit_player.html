@@ -4,8 +4,9 @@
   <div class="card-panel add-player">
     <form method="POST" action="{{ url_for('edit_player', player_id=player._id) }}">
       <a href="{{ url_for('get_players') }}" id="back-to-players" class="black-text">
-        <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
-          ><i class="fas fa-chevron-left"></i>
+        <i class="fas fa-chevron-left"><span class="sr-only">left arrow icon</span></i>
+        <i class="fas fa-chevron-left"><span class="sr-only">left arrow icon</span></i>
+        <i class="fas fa-chevron-left"><span class="sr-only">left arrow icon</span></i>
         <span>back to players</span>
       </a>
       <h4 class="center add-game-heading teal-text">Add a player</h4>

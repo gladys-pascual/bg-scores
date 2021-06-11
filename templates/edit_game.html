@@ -3,8 +3,9 @@
   <section class="add-game-wrapper">
     <div id="add_game" class="card-panel">
       <a href="{{ url_for('get_games') }}" id="back-to-games" class="black-text">
-        <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
-          ><i class="fas fa-chevron-left"></i>
+        <i class="fas fa-chevron-left"><span class="sr-only">left arrow icon</span></i>
+        <i class="fas fa-chevron-left"><span class="sr-only">left arrow icon</span></i>
+        <i class="fas fa-chevron-left"><span class="sr-only">left arrow icon</span></i>
         <span>back to games</span>
       </a>
       <form method="POST" action="{{ url_for('edit_game', game_id=game._id) }}">

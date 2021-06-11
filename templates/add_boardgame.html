@@ -3,9 +3,20 @@
 <div class="add-boardgame-wrapper">
   <div class="card-panel add-boardgame">
     <form method="POST" action="{{ url_for('add_boardgame') }}">
-      <a href="{{ url_for('get_boardgames') }}" id="back-to-boardgames" class="black-text">
-        <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i
-          ><i class="fas fa-chevron-left"></i>
+      <a
+        href="{{ url_for('get_boardgames') }}"
+        id="back-to-boardgames"
+        class="black-text"
+      >
+        <i class="fas fa-chevron-left"
+          ><span class="sr-only">left arrow icon</span></i
+        >
+        <i class="fas fa-chevron-left"
+          ><span class="sr-only">left arrow icon</span></i
+        >
+        <i class="fas fa-chevron-left"
+          ><span class="sr-only">left arrow icon</span></i
+        >
         <span>back to boardgames</span>
       </a>
       <h4 class="center add-game-heading teal-text">Add a boardgame</h4>

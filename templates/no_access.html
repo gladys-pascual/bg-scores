@@ -1,10 +1,20 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
 
 <div class="no-access-wrapper">
   <div class="no-access card-panel">
-    <h4 class="center no-access-title">Sorry, you don't have access on this item <i class="far fa-frown"></i></h4>
-    <p class="go-back-home center">Go back to the <a href="{{ url_for('get_games') }}" class="teal-text no-access-link">homepage</a> <i class="fas fa-dice-d6 prefix"></i></p>
+    <h4 class="center no-access-title">
+      Sorry, you don't have access on this item <i class="far fa-frown"></i>
+    </h4>
+    <p class="go-back-home center">
+      Go back to the
+      <a href="{{ url_for('get_games') }}" class="teal-text no-access-link"
+        >homepage</a
+      >
+      <i class="fas fa-dice-d6 prefix">
+        <span class="sr-only">dice icon</span>
+      </i>
+    </p>
   </div>
 </div>
 
