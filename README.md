@@ -177,10 +177,13 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
    - In the edit game, delete game, edit boardgame, or edit player, an additional if statement was added to check if the user stored in the session cookie storage is the same user that created the item. If not, the `no_access.html` is rendered.
 
     Checks / tests on each below were performed by getting the data from one user, saving the link, logging out, logging in to a different user, then copy pasting the link saved from the previous user, to check if the `no_access.html` would work.
-    - edit game:
-    - delete game:
-    - edit boardgame:
-    - edit player:
+    Local version:
+    - edit game: works
+    - delete game: works
+    - edit boardgame: works
+    - edit player: works
+    Deployed:
+    
 
 3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
 
