@@ -34,11 +34,11 @@ add description of the website
 
 ### Design
 
-  - #### Colour Scheme
-    - XXX
+  - #### Typography and Colour Scheme
+    - In this project, [Materialize V1.0.0](https://materializecss.com/) was used to create a responsive front-end. The default typography was used, while [colour palette](https://materializecss.com/color.html) teal, with different shades, was used for the colour scheme. 
 
-  - #### Typography
-    - XXX
+  - #### Logo 
+    - [Canva](https://www.canva.com/) was used to create a logo for bg-scores. 
      
   - #### Favicon
     -
@@ -56,17 +56,23 @@ add description of the website
 ## Features
 <hr>
 
-### As a potential user, I want to be able to register for an account.
-
-<br>
-
-
-### As a current user, I want to be able to log in of my account.
+### As a potential user, I want to be able to register for an account. 
 - Once the page is loaded, the function `get_games()` checks if session cookie storage has a value. 
   - If there is sometthing stored in the session cookie, the homepage is loaded.
   - If the session cookie storage is empty, the login page is loaded. 
-  
+- In the login page, a link that will re-direct the user to the register page is available below the login form.
+- The register page asks for a username and a password.
+- Once the user clicks submit, a check is performed to see if the username is already in the database. If it's already in the database, a flash message of "Username already exists, please try a new one." is shown. If the username is not in the database, we add it and a flash messae "Registration was succesful." is shown.
+
 <br>
+
+### As a current user, I want to be able to log in of my account.
+- The login page asks for a username and password. 
+- Once submitted, we first perform a check of whether the username exists in the database. If it doesn't exist, a flash message of "Invalid username and/or password" is shown. If the username exists, a check of whether the corresponding password_hash present in the databse matches. If it doesn't match, the same flash message will be shown. We don't want the user to know if it's the username or password that is incorrect to prevent brute forcing into our forms. If the username and password matches, the user is redirected to get_games, which is the homepage and will display all the games previously played. 
+
+<br>
+
+
 
 ### As a user, I want to be able to log out of my account.
 
@@ -183,11 +189,15 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
     - edit boardgame: works
     - edit player: works
     Deployed:
-    
+    - edit game: ?
+    - delete game: ?
+    - edit boardgame: ?
+    - edit player: ?
+
 
 3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
 
-4. xxx
+4. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience. 
 
 ## Deployment
 <hr>

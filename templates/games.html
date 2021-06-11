@@ -14,43 +14,44 @@
       >Add a game <i class="fas fa-dice-d6 prefix"><span class="sr-only">dice icon</span></i></a
     >
   </div>
-    <div class="game-cards">
-      {% for game in games %}
-        {% if session.user|lower == game.created_by|lower %}
-          <div class="games card-panel">
-            <div class="card-header">
-              <p class="game-date">{{ game.game_date }}</p>
-              <div class="edit-delete-button">
-                <a
-                  href="{{ url_for('edit_game', game_id=game._id) }}"
-                  class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
-                  ><i class="fas fa-edit edit-icon"></i
-                ></a>
-                <a
-                  href="{{ url_for('delete_game_confirmation', game_id=game._id) }}"
-                  class="waves-effect waves-light btn-flat delete-btn teal lighten-4"
-                  ><i class="fas fa-times delete-icon"></i
-                ></a>
-              </div>
+
+  <div class="game-cards">
+    {% for game in games %}
+      {% if session.user|lower == game.created_by|lower %}
+        <div class="games card-panel">
+          <div class="card-header">
+            <p class="game-date">{{ game.game_date }}</p>
+            <div class="edit-delete-button">
+              <a
+                href="{{ url_for('edit_game', game_id=game._id) }}"
+                class="waves-effect waves-light btn-flat edit-btn teal lighten-4"
+                ><i class="fas fa-edit edit-icon"><span class="sr-only">edit icon</span></i
+              ></a>
+              <a
+                href="{{ url_for('delete_game_confirmation', game_id=game._id) }}"
+                class="waves-effect waves-light btn-flat delete-btn teal lighten-4"
+                ><i class="fas fa-times delete-icon"><span class="sr-only">delete icon</span></i
+              ></a>
             </div>
-            <h4 class="board-game-heading center">{{ game.game_name }}</h4>
-            {% for game_player_info in game.players_scores %}
-            <p class="player-and-score col s10 offset-s1 m6 offset-m3">
-              <span>
-                {{ game_player_info.player_name }} {% if game_player_info.isWinner %}
+          </div>
+          <h4 class="board-game-heading center">{{ game.game_name }}</h4>
+          {% for game_player_info in game.players_scores %}
+          <p class="player-and-score col s10 offset-s1 m6 offset-m3">
+            <span>
+              {{ game_player_info.player_name }} 
+              {% if game_player_info.isWinner %}
                 <span class="player-gap">
                   <i class="fas fa-trophy orange-text"
                     ><span class="sr-only">trophy icon</span></i
                   >
                 </span>
-                {% endif %}
-              </span>
-              <span> {{ game_player_info.score}} </span>
-            </p>
-            {% endfor %}
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+              {% endif %}
+            </span>
+            <span> {{ game_player_info.score}} </span>
+          </p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
 {% endblock %}

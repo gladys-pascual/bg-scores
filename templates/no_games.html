@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<div class="add-bg-btn-wrapper center">
+  <a
+    href="{{ url_for('add_game') }}"
+    class="
+      modal-close
+      waves-effect waves-light
+      btn-flat
+      add-game-btn
+      teal
+      lighten-4
+    "
+    >Add a game <i class="fas fa-dice-d6 prefix"><span class="sr-only">dice icon</span></i></a
+  >
+</div>
+
+<div class="no-bg-game-player-wrapper">
+  <div class="no-bg-game-player card-panel">
+    <h4 class="center no-bg-game-player-title">
+      You have no games yet. 
+    </h4>
+    <h4 class="center no-bg-game-player-title">
+      Add one now <i class="far fa-smile"></i>
+    </h4>
+    </p>
+  </div>
+</div>
+
+{% endblock %}

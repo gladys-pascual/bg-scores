@@ -397,10 +397,33 @@ a:-webkit-any-link:focus-visible {
   letter-spacing: 2px;
 }
 
+/* No games, boardgame or player */
+.no-bg-game-player-wrapper{
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.no-bg-game-player{
+  width: 600px;
+}
+
+.no-bg-game-player-title{
+  font-size: 1.8em;
+}
+
 /* Media queries */
 @media screen and (max-width: 800px) {
   #add_game, .no-access {
     width: 500px;
+  }
+
+  .no-bg-game-player{
+    width: 450px;
+  }
+
+  .no-bg-game-player-title{
+    font-size: 1.5em;
   }
 }
 
@@ -452,5 +475,13 @@ a:-webkit-any-link:focus-visible {
   .delete-buttons{
     display: flex;
     flex-direction: column;
+  }
+
+  .no-bg-game-player{
+    width: 300px;
+  }
+
+  .no-bg-game-player-title{
+    font-size: 0.9em;
   }
 }

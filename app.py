@@ -100,9 +100,17 @@ def get_games():
         games = list(mongo.db.games.find().sort("game_date", -1))
         players = list(mongo.db.players.find())
         boardgames = list(mongo.db.boardgames.find())
+
+        # Check if the user does not have a game yet
+        user = session.get("user")
+        user_games = list(mongo.db.games.find({ "created_by": user }))
+        if len(user_games) == 0:
+            return render_template("no_games.html")
+
         return render_template("games.html",
                                games=map(mapGame, games), players=map(mapPlayer, players), 
                                boardgames=map(mapBoardgame, boardgames))
+
     else:
         return redirect(url_for("login"))
 
@@ -135,7 +143,7 @@ def login():
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
+                existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 return redirect(url_for("get_games"))
             else:
@@ -263,6 +271,13 @@ def get_boardgames():
         return redirect(url_for("login"))
 
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
+
+    # Check if the user does not have a boardgame yet
+    user = session.get("user")
+    user_boardgames = list(mongo.db.games.find({ "created_by": user }))
+    if len(user_boardgames) == 0:
+        return render_template("no_boardgames.html")
+
     return render_template("boardgames.html", boardgames=map(mapBoardgame, boardgames))
 
 
@@ -310,6 +325,13 @@ def get_players():
         return redirect(url_for("login"))
 
     players = list(mongo.db.players.find().sort("player", 1))
+
+    # Check if the user does not have a player yet
+    user = session.get("user")
+    user_players = list(mongo.db.games.find({ "created_by": user }))
+    if len(user_players) == 0:
+        return render_template("no_players.html")
+
     return render_template("players.html", players=map(mapPlayer, players))
 
 
