@@ -13,7 +13,7 @@
         <!-- Choose a boardgame  -->
         <div class="row choose-bg">
           <div class="input-field col s12 m10 offset-m1">
-            <i class="fas fa-dice-d6 prefix"></i>
+            <i class="fas fa-dice-d6 prefix"><span class="sr-only">dice icon</span></i>
             <select id="edit_bg" name="edit_bg" required>
               <option value="" disabled>Choose a boardgame</option>
               {% for boardgame in boardgames %}
@@ -31,7 +31,7 @@
         <!-- date picker -->
         <div class="row">
           <div class="input-field col s12 m10 offset-m1 small">
-            <i class="fas fa-calendar-alt prefix"></i>
+            <i class="fas fa-calendar-alt prefix"><span class="sr-only">calendar icon</span></i>
             <input
               id="edit_game_date"
               name="edit_game_date"
@@ -47,7 +47,7 @@
         <!-- Choose a player  --> 
         <div class="row" >
           <div id="edit-players" class="input-field col s12 m10 offset-m1 player">
-            <i class="fas fa-user prefix dropdown-icon"></i>
+            <i class="fas fa-user prefix dropdown-icon"><span class="sr-only">dropdown icon</span></i>
             <select multiple id="edit_p" name="edit_p" class="validate" required>
               <option value="" disabled>Choose a player</option>
               {% for player in players %}

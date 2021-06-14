@@ -2,7 +2,7 @@
 
 [View the live project here.](https://bg-scores.herokuapp.com/)
 
-add description of the website
+BG scores is a web application that allows user to record the boardgames that they played, including the date of the game, the players and their scores. The application allows for the user to manage the list of boardgames and players in their account. 
 
 <img src="" alt="BG-scores gif"/>
 
@@ -72,32 +72,35 @@ add description of the website
 
 <br>
 
-
-
 ### As a user, I want to be able to log out of my account.
+- In the header, the user is greated with Hi, `<username>`!. When hovered,the logout button will be available. Once the logout button is clicked, the data "user" stored in the session cookie will be removed and the user will be redirected to the login page. 
 
 <br>
 
 ### As a user, I want to be able to record the games that I played, by:
-#### 1. Adding a board game from a list of pre-added board games
-#### 2. Seeing a list of all my board games
-#### 3. Editing a name of a board game
-#### 4. Deleting a board game
+i) Adding a board game from a list of pre-added board games <br>
+ii) Seeing a list of all my board games <br>
+iii) Editing a name of a board game <br>
+iv) Deleting a board game <br>
+
+- In the homepage, a button labelled as "Add a Game" is available to allow the user to add their game details. Once the button is clicked, the user is 
+
 
 <br>
 
 ### As a user, I want to be able to manage the board games in my account, by:
-#### 1. Adding a board game
-#### 2. Seeing a list of all my board games
-#### 3.  Editing a name of a board game
-explain why there's no delete
+i) Adding a board game <br>
+ii) Seeing a list of all my board games <br>
+iii) Editing a name of a board game <br>
+explain why there's no delete <br>
 
 <br>
 
 ### As a user, I want to be able to manage the players in my account, by:
-#### 1. Adding a player
-#### 2. Seeing a list of all the players
-#### 3. Editing a player's name
+i) Adding a player <br>
+ii) Seeing a list of all the players <br>
+iii) Editing a player's name <br>
+
 <br>
 
 ### Accessibility
@@ -112,25 +115,27 @@ Ensure accessibility throughout the website by:
 
 The following technologies have been used in this project:
 * [Python 3.8.2](https://www.python.org/download/releases/3.0/) 
-    * Python is supposed to be the main hero of this project.
+    * Python was used to create the XXXXX
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-    * web framework written in Python.
+    * Web framework written in Python.
 * [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
-    * is used as templating language for Python and its depending framework Flask
+    * A templating language for Python and dependent on the Flask framework 
 * [MongoDB](https://www.mongodb.com/)
     * It is a document-oriented database program.
 * [Heroku](https://heroku.com/)
-    * It is a cloud platform to run this python project.
+    * 
 * [HTML](https://www.w3.org/TR/html52/) 
     * used to structure and presenting the content.
 * [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
     * used for styling.
+* [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+    * 
 * [JQuery](https://jquery.com/)
-    * this project used JavaScript in the form of JQuery to simplify DOM manipulation.
+    * 
 * [Materialize 1.0.0](https://materializecss.com/)
     * CSS framework used for structuring and presenting the content.
 * [FontAwesome](https://fontawesome.com/)
-    * used to create icons. <br/><br/>
+    * Font Awesome was used throughout the website to add icons for better aesthetic and UX purposes. <br/><br/>
 
 ## Database architecture
 <hr>
