@@ -2,7 +2,7 @@
 
 [View the live project here.](https://bg-scores.herokuapp.com/)
 
-add description of the website
+BG scores is a web application that allows user to record the boardgames that they played, including the date of the game, the players and their scores. The application allows for the user to manage the list of boardgames and players in their account.
 
 <img src="" alt="BG-scores gif"/>
 
@@ -11,12 +11,14 @@ add description of the website
 <br/>
 
 ## User Experience (UX)
+
 <hr>
 
 ### User stories
+
 - As a potential user, I want to be able to register for an account.
 - As a current user, I want to be able to log in and out of my account.
-- As a user, I want to be able to record (create) the games that I played. The game information would include: 
+- As a user, I want to be able to record (create) the games that I played. The game information would include:
   - Boardgame
   - Date of when the game was played
   - The players and their scores
@@ -34,17 +36,18 @@ add description of the website
 
 ### Design
 
-  - #### Colour Scheme
-    - XXX
+- #### Typography and Colour Scheme
 
-  - #### Typography
-    - XXX
-     
-  - #### Favicon
-    -
+  - In this project, [Materialize V1.0.0](https://materializecss.com/) was used to create a responsive front-end. The default typography was used, while [colour palette](https://materializecss.com/color.html) teal, with different shades, was used for the colour scheme.
 
-  - #### Animations
-    - logo-bounce-animation: When there is a hover on the logo, logo-bounce-animation is applied to let the user know that the logo is a clickable link. The logo-bounce-animation adds some fun to the website.
+- #### Logo
+  - [Canva](https://www.canva.com/) was used to create a logo for bg-scores.
+- #### Favicon
+
+  -
+
+- #### Animations
+  - logo-bounce-animation: When there is a hover on the logo, logo-bounce-animation is applied to let the user know that the logo is a clickable link. The logo-bounce-animation adds some fun to the website.
 
 ### Wireframes
 
@@ -53,118 +56,212 @@ add description of the website
 <br>
 <br>
 
+## Database architecture
+
+This project has four collections:
+
+1. games
+
+   - List of games played by each user, containing information about the game such as the name of the boardgame played, when the game is played, and a list of players and their scores.
+
+     ```
+     _id: ObjectId
+     boardgame: id of the boardgame played, in string format
+     game_date: date of the game, in ISO format
+     created_by: user, stored in the session cookie storage, string format
+     players_scores: [
+       {
+       player: id of the player, in string format,
+       score: integer,
+       isWinner: boolean,
+       },
+       {
+       player: id of the player, in string format,
+       score: integer,
+       isWinner: boolean,
+       },
+     ]
+     ```
+
+     <img src="./static/assets/db_games.png" alt="structure of the game collection"/>
+
+
+2. boardgames
+   ` _id: ObjectId, boardgame: name of the boardgame as input by the user, in string creaetd_by: user, stored in the session cookie storage, string format `
+
+3. players
+   ` _id: ObjectId, player: name of the player as input by the user, in string creaetd_by: user, stored in the session cookie storage, string format `
+4. users
+   ` _id: ObjectId, username: string passsword: string (hash) `
+
+In this project, the boardgame and player name stored in the game collecttion is the corresponding id (in string format) from the ObjectId, rather than the name of the boardgame or player. This was implemented to ensure that if the player or boardgame name is edited, the correct name will be displayed to the user, as the id will always be the same. 
+
+<br>
+<br>
+
 ## Features
+
 <hr>
 
 ### As a potential user, I want to be able to register for an account.
 
+- Once the page is loaded, the function `get_games()` checks if session cookie storage has a value.
+  - If there is sometthing stored in the session cookie, the homepage is loaded.
+  - If the session cookie storage is empty, the login page is loaded.
+- In the login page, a link that will re-direct the user to the register page is available below the login form.
+- The register page asks for a username and a password.
+- Once the user clicks submit, a check is performed to see if the username is already in the database. If it's already in the database, a flash message of "Username already exists, please try a new one." is shown. If the username is not in the database, we add it and a flash messae "Registration was succesful." is shown.
+
 <br>
 
-
 ### As a current user, I want to be able to log in of my account.
-- Once the page is loaded, the function `get_games()` checks if session cookie storage has a value. 
-  - If there is sometthing stored in the session cookie, the homepage is loaded.
-  - If the session cookie storage is empty, the login page is loaded. 
-  
+
+- The login page asks for a username and password.
+- Once submitted, we first perform a check of whether the username exists in the database. If it doesn't exist, a flash message of "Invalid username and/or password" is shown. If the username exists, a check of whether the corresponding password_hash present in the databse matches. If it doesn't match, the same flash message will be shown. We don't want the user to know if it's the username or password that is incorrect to prevent brute forcing into our forms. If the username and password matches, the user is redirected to get_games, which is the homepage and will display all the games previously played.
+
 <br>
 
 ### As a user, I want to be able to log out of my account.
 
+- In the header, the user is greated with Hi, `<username>`!. When hovered,the logout button will be available. Once the logout button is clicked, the data "user" stored in the session cookie will be removed and the user will be redirected to the login page.
+
 <br>
 
 ### As a user, I want to be able to record the games that I played, by:
-#### 1. Adding a board game from a list of pre-added board games
-#### 2. Seeing a list of all my board games
-#### 3. Editing a name of a board game
-#### 4. Deleting a board game
+
+i) Adding a board game from a list of pre-added board games <br>
+ii) Seeing a list of all my board games <br>
+iii) Editing a name of a board game <br>
+iv) Deleting a board game <br>
+
+- In the homepage, a button labelled as "Add a Game" is available to allow the user to add their game details. Once the button is clicked, the user is
 
 <br>
 
 ### As a user, I want to be able to manage the board games in my account, by:
-#### 1. Adding a board game
-#### 2. Seeing a list of all my board games
-#### 3.  Editing a name of a board game
-explain why there's no delete
+
+i) Adding a board game <br>
+ii) Seeing a list of all my board games <br>
+iii) Editing a name of a board game <br>
+explain why there's no delete <br>
 
 <br>
 
 ### As a user, I want to be able to manage the players in my account, by:
-#### 1. Adding a player
-#### 2. Seeing a list of all the players
-#### 3. Editing a player's name
+
+i) Adding a player <br>
+ii) Seeing a list of all the players <br>
+iii) Editing a player's name <br>
+
 <br>
 
 ### Accessibility
+
 Ensure accessibility throughout the website by:
-  - Adding 'alt' text on all images.
-  - Font awesome icons are in an `<i>` tag. A span with a class "sr-only" is added which describes the icons. The "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read.
+
+- Adding 'alt' text on all images.
+- Font awesome icons are in an `<i>` tag. A span with a class "sr-only" is added which describes the icons. The "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read.
 
 <br/>
 
 ## Technologies Used
+
 <hr>
 
 The following technologies have been used in this project:
-* [Python 3.8.2](https://www.python.org/download/releases/3.0/) 
-    * Python is supposed to be the main hero of this project.
-* [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-    * web framework written in Python.
-* [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
-    * is used as templating language for Python and its depending framework Flask
-* [MongoDB](https://www.mongodb.com/)
-    * It is a document-oriented database program.
-* [Heroku](https://heroku.com/)
-    * It is a cloud platform to run this python project.
-* [HTML](https://www.w3.org/TR/html52/) 
-    * used to structure and presenting the content.
-* [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
-    * used for styling.
-* [JQuery](https://jquery.com/)
-    * this project used JavaScript in the form of JQuery to simplify DOM manipulation.
-* [Materialize 1.0.0](https://materializecss.com/)
-    * CSS framework used for structuring and presenting the content.
-* [FontAwesome](https://fontawesome.com/)
-    * used to create icons. <br/><br/>
 
-## Database architecture
-<hr>
-
+- [Python 3.8.2](https://www.python.org/download/releases/3.0/)
+  - Python was mainly used in this project to implement a back-end, by creating CRUD functionality.
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+  - Web framework written in Python to allow build web applications.
+- [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
+  - A templating engine language for Python and dependent on the Flask framework.
+- [MongoDB](https://www.mongodb.com/)
+  - It is a document-oriented database program.
+- [Heroku](https://heroku.com/)
+  - It is used to deploy the project.
+- [HTML](https://www.w3.org/TR/html52/)
+  - Used to structure and presenting the web content.
+- [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
+  - Used for styling the web content.
+- [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+  - Used to make the website interactive.
+- [JQuery](https://jquery.com/)
+  - JavaScript library used to ensure interactivity, especially on Materialize components work as intended.
+- [Materialize 1.0.0](https://materializecss.com/)
+  - CSS framework used for structuring and presenting the content.
+- [FontAwesome](https://fontawesome.com/)
+  - Font Awesome was used throughout the website to add icons for better aesthetic and UX purposes. <br/><br/>
 
 ## Testing
+
 <hr>
 
 - remove white outline on header
-
 
 The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of the project to ensure there were no syntax errors in the project.
 
 [W3C Markup Validator](https://validator.w3.org/#validate_by_input)
 
-  
-
 - ensure that only the details loaded by the user is rendered:
+
   - session user added
   - put condition
   - test if that works
 
 - isWinner is incorrect
   - root cause - scores being stored as string
-  - convert to string by: 
-    ``` python
+  - convert to string by:
+    ```python
     scores = request.form.getlist("score")
     scores_int = [int(score) for score in scores]
     ```
-- edit game, URL has game_id. If this game_id is incorrect (random digits put by user), a 500 error is given and page doesn't handle it. 
+- edit game, URL has game_id. If this game_id is incorrect (random digits put by user), a 500 error is given and page doesn't handle it.
   - Write a function that will handle 500 error
   - Render html template
   - Along with this, write a handler for 404 too
+
 ### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
 
-1. xxx
-2. xxx
-3. xxx
+1. If the user has a url of edit or delete game, edit boardgame, or edit player (for example, edit game: http://0.0.0.0:5000/edit_game/60bfd8c0e67d2a5f4ac05115), even if the user is logged out, theu can access the edit or delete game, edit boardgame, or edit player. This is a risk because:
+
+   - Unauthorized user, a user that does not have an account, can manipulate the items.
+   - As a precaution, edit or delete game, edit boardgame, or edit player are only displayed if a user is logged in by checking the session cookie storage. Otherwise, the user will be navigated to the login page. This code was added for this purpose:
+
+   ```python
+   # Check if there is a user data saved in the cookie session storage
+   # If not, redirect to login page
+   if not session.get("user"):
+       return redirect(url_for("login"))
+   ```
+
+    <br>
+
+2. Another potential issue was a user can access another users' data if they have a link that contains the id of the item. To avoid this:
+
+   - In the edit game, delete game, edit boardgame, or edit player, an additional if statement was added to check if the user stored in the session cookie storage is the same user that created the item. If not, the `no_access.html` is rendered.
+
+   Checks / tests on each below were performed by getting the data from one user, saving the link, logging out, logging in to a different user, then copy pasting the link saved from the previous user, to check if the `no_access.html` would work.
+   Local version:
+
+   - edit game: works
+   - delete game: works
+   - edit boardgame: works
+   - edit player: works
+     Deployed:
+   - edit game: ?
+   - delete game: ?
+   - edit boardgame: ?
+   - edit player: ?
+
+3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
+
+4. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience.
+
+5. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
 
 ## Deployment
+
 <hr>
 
 <br>
@@ -172,12 +269,15 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 <br>
 
 ## Credits
+
 <hr>
 - Hide Arrows From Input Number 
 https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
 
-### Code
+- Adding Favicon
+  https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/
 
+### Code
 
 ### Content
 
@@ -185,9 +285,6 @@ https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
 
 ### Media
 
-
 ### Acknowledgements
 
 - My mentor, Narender Singh, for continuous helpful feedback.
-
-

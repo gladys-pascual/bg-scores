@@ -100,9 +100,17 @@ def get_games():
         games = list(mongo.db.games.find().sort("game_date", -1))
         players = list(mongo.db.players.find())
         boardgames = list(mongo.db.boardgames.find())
+
+        # Check if the user does not have a game yet
+        user = session.get("user")
+        user_games = list(mongo.db.games.find({ "created_by": user }))
+        if len(user_games) == 0:
+            return render_template("no_games.html")
+
         return render_template("games.html",
                                games=map(mapGame, games), players=map(mapPlayer, players), 
                                boardgames=map(mapBoardgame, boardgames))
+
     else:
         return redirect(url_for("login"))
 
@@ -135,7 +143,7 @@ def login():
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
+                existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 return redirect(url_for("get_games"))
             else:
@@ -172,6 +180,11 @@ def mapPlayersScores(players, scores):
 
 @app.route("/add_game", methods=["GET", "POST"])
 def add_game():
+    # Check if there is a user data saved in the cookie session storage
+    # If not, redirect to login page
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         game = {
             "boardgame": request.form.get("boardgame"),
@@ -193,6 +206,10 @@ def add_game():
 
 @app.route("/edit_game/<game_id>", methods=["GET", "POST"])
 def edit_game(game_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+    
+
     if request.method == "POST":
         edit_game = {
             "boardgame": request.form.get("edit_bg"),
@@ -212,18 +229,37 @@ def edit_game(game_id):
     edit_players_scores = game["players_scores"]
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
+
+    edit_game_creator= game["created_by"]
+    if session.get("user").lower()  !=   edit_game_creator.lower():
+        return render_template("no_access.html")
+
     return render_template("edit_game.html", game=game, game_date=game_date, edit_players_scores=mapSelectedPlayersScores(players, edit_players_scores),
                            players=mapSelectedPlayers(players, list(mapToPlayerIds(edit_players_scores))), boardgames=map(mapBoardgame, boardgames))
 
 
 @app.route("/delete_game_confirmation/<game_id>")
 def delete_game_confirmation(game_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    delete_game_creator= game["created_by"]
+    if session.get("user").lower()  !=   delete_game_creator.lower():
+        return render_template("no_access.html")
     return render_template("delete_game_confirmation.html", game=game)
 
 
 @app.route("/delete_game/<game_id>")
 def delete_game(game_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
+    game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
+    delete_game_creator= game["created_by"]
+    if session.get("user").lower()  !=   delete_game_creator.lower():
+        return render_template("no_access.html")
+
     mongo.db.games.remove({"_id": ObjectId(game_id)})
     flash("Game successfully deleted.")
     return redirect(url_for("get_games"))
@@ -231,12 +267,25 @@ def delete_game(game_id):
 
 @app.route("/get_boardgames")
 def get_boardgames():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
+
+    # Check if the user does not have a boardgame yet
+    user = session.get("user")
+    user_boardgames = list(mongo.db.games.find({ "created_by": user }))
+    if len(user_boardgames) == 0:
+        return render_template("no_boardgames.html")
+
     return render_template("boardgames.html", boardgames=map(mapBoardgame, boardgames))
 
 
 @app.route("/add_boardgame", methods=["GET", "POST"])
 def add_boardgame():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         boardgame = {
             "boardgame": request.form.get("add_boardgame"),
@@ -250,6 +299,9 @@ def add_boardgame():
 
 @app.route("/edit_boardgame/<boardgame_id>", methods=["GET", "POST"])
 def edit_boardgame(boardgame_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         submit_bg = {
             "boardgame": request.form.get("edit_boardgame"),
@@ -260,17 +312,34 @@ def edit_boardgame(boardgame_id):
         return redirect(url_for("get_boardgames"))
 
     boardgame = mongo.db.boardgames.find_one({"_id": ObjectId(boardgame_id)})
+    edit_bg_creator= boardgame["created_by"]
+    if session.get("user").lower()  !=   edit_bg_creator.lower():
+        return render_template("no_access.html")
+
     return render_template("edit_boardgame.html", boardgame=boardgame)
 
 
 @app.route("/get_players")
 def get_players():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     players = list(mongo.db.players.find().sort("player", 1))
+
+    # Check if the user does not have a player yet
+    user = session.get("user")
+    user_players = list(mongo.db.games.find({ "created_by": user }))
+    if len(user_players) == 0:
+        return render_template("no_players.html")
+
     return render_template("players.html", players=map(mapPlayer, players))
 
 
 @app.route("/add_player", methods=["GET", "POST"])
 def add_player():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         player = {
             "player": request.form.get("add_player"),
@@ -284,6 +353,9 @@ def add_player():
 
 @app.route("/edit_player/<player_id>", methods=["GET", "POST"])
 def edit_player(player_id):
+    if not session.get("user"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         submit_bg = {
             "player": request.form.get("edit_player"),
@@ -294,8 +366,12 @@ def edit_player(player_id):
         return redirect(url_for("get_players"))
 
     player = mongo.db.players.find_one({"_id": ObjectId(player_id)})
-    return render_template("edit_player.html", player=player)
+    edit_player_creator= player["created_by"]
+    if session.get("user").lower()  !=   edit_player_creator.lower():
+        return render_template("no_access.html")
 
+    return render_template("edit_player.html", player=player)
+    
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

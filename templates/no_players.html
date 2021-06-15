@@ -1,0 +1,30 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<div class="add-player-btn-wrapper center">
+  <a
+    href="{{ url_for('add_player') }}"
+    class="
+      modal-close
+      waves-effect waves-light
+      btn-flat
+      add-player-btn
+      teal
+      lighten-4
+    "
+    >Add a player <i class="far fa-user prefix"></i></a
+  >
+</div>
+<div class="no-bg-game-player-wrapper">
+  <div class="no-bg-game-player card-panel">
+    <h4 class="center no-bg-game-player-title">
+      You have no players yet. 
+    </h4>
+    <h4 class="center no-bg-game-player-title">
+      Add one now <i class="far fa-smile"></i>
+    </h4>
+    </p>
+  </div>
+</div>
+
+{% endblock %}
