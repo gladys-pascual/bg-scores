@@ -204,6 +204,9 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 
 4. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience. 
 
+
+5. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
+
 ## Deployment
 <hr>
 
@@ -216,6 +219,8 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 - Hide Arrows From Input Number 
 https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
 
+- Adding Favicon
+https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/
 ### Code
 
 
