@@ -204,7 +204,6 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 [W3C Markup Validator](https://validator.w3.org/#validate_by_input)
 
 - ensure that only the details loaded by the user is rendered:
-
   - session user added
   - put condition
   - test if that works
@@ -257,6 +256,9 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
 
 4. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience.
+     <img src="./static/assets/no_game.png" alt="no game"/>
+     <img src="./static/assets/no_boardgame.png" alt="no boardgame"/>
+     <img src="./static/assets/no_player.png" alt="no player"/>
 
 5. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
 
