@@ -16,6 +16,8 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
+app.config['TRAP_HTTP_EXCEPTIONS']=True
+app.register_error_handler(Exception, defaultHandler)
 
 
 mongo = PyMongo(app)
@@ -377,8 +379,20 @@ def edit_player(player_id):
     return render_template("edit_player.html", player=player)
 
 
+# Handling error 404 and displaying relevant webpage
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
+
+
+# 500 Error Page
+@app.errorhandler(500)
+def server_error(error):
+    return render_template("500.html"), 500
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
+            debug=False)
 # make sure to put debug = False prior to submitting project
