@@ -199,15 +199,15 @@ Ensure accessibility throughout the website by:
 The following technologies have been used in this project:
 
 - [Python 3.8.2](https://www.python.org/download/releases/3.0/)
-  - Python was mainly used in this project to implement a back-end, by creating CRUD functionality.
+  - Python was used to implement a back-end, by creating the CRUD functionality.
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
   - Web framework written in Python to allow build web applications.
 - [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
   - A templating engine language for Python and dependent on the Flask framework.
 - [MongoDB](https://www.mongodb.com/)
-  - It is a document-oriented database program.
+  - A document-oriented database program, where the data is stored.
 - [Heroku](https://heroku.com/)
-  - It is used to deploy the project.
+  - Used to deploy the project.
 - [HTML](https://www.w3.org/TR/html52/)
   - Used to structure and presenting the web content.
 - [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
@@ -215,9 +215,9 @@ The following technologies have been used in this project:
 - [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
   - Used to make the website interactive.
 - [JQuery](https://jquery.com/)
-  - JavaScript library used to ensure interactivity, especially on Materialize components work as intended.
+  - JavaScript library used to ensure interactivity, especially on Materialize components to work as intended.
 - [Materialize 1.0.0](https://materializecss.com/)
-  - CSS framework used for structuring and presenting the content.
+  - CSS framework used for this project for structuring and presenting the content.
 - [FontAwesome](https://fontawesome.com/)
   - Font Awesome was used throughout the website to add icons for better aesthetic and UX purposes. <br/><br/>
 
@@ -267,19 +267,22 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 2. Another potential issue was a user can access another users' data if they have a link that contains the id of the item. To avoid this:
 
    - In the edit game, delete game, edit boardgame, or edit player, an additional if statement was added to check if the user stored in the session cookie storage is the same user that created the item. If not, the `no_access.html` is rendered.
+  <img src="./static/assets/no_access.png" alt="no access"/>
 
-   Checks / tests on each below were performed by getting the data from one user, saving the link, logging out, logging in to a different user, then copy pasting the link saved from the previous user, to check if the `no_access.html` would work.
-   Local version:
-
-   - edit game: works
-   - delete game: works
-   - edit boardgame: works
-   - edit player: works
-     Deployed:
-   - edit game: ?
-   - delete game: ?
-   - edit boardgame: ?
-   - edit player: ?
+   Checks / tests on each below were performed by getting the data from one user, saving the link, logging out, logging in to a different user, then copy pasting the link saved from the previous user, to check if the `no_access.html` would work. 
+   
+   <br>
+   Local version: <br>
+   - edit game: works <br>
+   - delete game: works <br>
+   - edit boardgame: works <br>
+   - edit player: works <br>
+    <br>
+  Deployed: <br>
+   - edit game: ? <br>
+   - delete game: ? <br>
+   - edit boardgame: ? <br>
+   - edit player: ? <br>
 
 3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
 

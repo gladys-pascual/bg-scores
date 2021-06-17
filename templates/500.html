@@ -1,0 +1,16 @@
+{% extends "base.html" %} 
+{% block content %}
+  <main>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 center-align">
+                <h1 class="error-heading">Error</h1>
+                <p class="error-para">500 - Server Error</p>
+                <p class="error-para">Please return to the homepage.</p>
+                <a class="waves-effect waves-light btn-large" href="{{ url_for('games') }}" id="home-btn">
+                    <i class="fas fa-home right"><span class="sr-only">home icon</span></i>Home</a>
+            </div>
+        </div>
+    </div>
+  </main>
+{% endblock %}
