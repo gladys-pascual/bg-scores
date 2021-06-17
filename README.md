@@ -241,27 +241,42 @@ der>↩↩    <section>↩
 ```
 To solve, `<h2>` heading were added on `<section>` tags, with a class name of `sr-only` so it does not appear on the page and not change the current UI, but avoid the warning. 
 
-- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_uri)
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_uri) <br>
+1. The following errror appeared: 
+```
+URI : http://bg-scores.herokuapp.com/static/css/style.css
+160	a:-webkit-any-link:focus-visible	none is not a outline-offset value : none
+```
+  This was fixed by changing changing the `outline-offset` from none to 0.
 
-- remove white outline on header
+<br>
+<br>
 
-- ensure that only the details loaded by the user is rendered:
-  - session user added
-  - put condition
-  - test if that works
+2. An error in relation to the imported materialize css exist:
+```
+URI : https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css
+13	.table-of-contents a	Value Error : letter-spacing only 0 can be a unit. You must put a unit after your number : 0.4
+```
+Since it came from the framework materialize css and not my css, I couldn't rectify the error. The application was checked again to see if this error affects the functionality of the app, and it was concluded that it did not. In additon, there are a number of warnings in relation to the materialize css.
 
-- isWinner is incorrect
-  - root cause - scores being stored as string
-  - convert to string by:
+<br>
+
+### During the development, the following issues were encountered:
+
+- Remove white outline on header
+
+- Ensure that only the details added by the specific user is rendered, by
+  - adding a "created_by" key in each collection, which adds the session user
+  - a check is performed to see if the item "created_by" key matches what is stored in the collection. If it does, then the collection (game, boardgame or player) is shown in the page.
+  - this was manually tested to ensure that the functionality works.
+
+- isWinner information is incorrect, not giving the correct boolean result 
+  - After investigation, the root cause was determined to be that the scores were being stored as a string
+  - To convert to the score from string to integer, the following code is used:
     ```python
     scores = request.form.getlist("score")
     scores_int = [int(score) for score in scores]
     ```
-- edit game, URL has game_id. If this game_id is incorrect (random digits put by user), a 500 error is given and page doesn't handle it.
-  - Write a function that will handle 500 error
-  - Render html template
-  - Along with this, write a handler for 404 too
-
 ### Manual testing were also performed to ensure that the application works as intended. During this, the following errors were found and were rectified:
 
 1. If the user has a url of edit or delete game, edit boardgame, or edit player (for example, edit game: http://0.0.0.0:5000/edit_game/60bfd8c0e67d2a5f4ac05115), even if the user is logged out, theu can access the edit or delete game, edit boardgame, or edit player. This is a risk because:
@@ -299,41 +314,86 @@ To solve, `<h2>` heading were added on `<section>` tags, with a class name of `s
    - edit boardgame: working <br>
    - edit player: working <br>
 <br>
-  
 
-3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
+
+3. In the edit game, URL has game_id. If this game_id is incorrect (random digits put by user), a 500 error is given and page doesn't handle it.
+  - Write a function that will handle 500 error
+  - Render html template
+  - Along with this, write a handler for 404 too
+
+<br>
+
+4. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
    
 <br>
 
-4. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience.
+5. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience.
      <img src="./static/assets/no_game.png" alt="no game"/>
      <img src="./static/assets/no_boardgame.png" alt="no boardgame"/>
      <img src="./static/assets/no_player.png" alt="no player"/>
 
-5. While step 4 was being tested, it was noticed that despite adding a boardgame and player, the `/get_boardgames` and `/get_players` page was not rendering the recently added players. It was found that an error in python code exists, where for games collection was being searched instead of the boardgames and players collection. This was rectified and tested, and was able to display the recently added boardgame and player.
+6. While step 4 was being tested, it was noticed that despite adding a boardgame and player, the `/get_boardgames` and `/get_players` page was not rendering the recently added players. It was found that an error in python code exists, where for games collection was being searched instead of the boardgames and players collection. This was rectified and tested, and was able to display the recently added boardgame and player.
 
-6. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
+7. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
 
    
 ## Deployment
 
 <hr>
 
+### Heroku
+1. Create a heroku account. Create a new app and select your region.
+2. Prepare the local workspace for Heroku. Create a `requirements.txt` file by:
+   ```
+   pip3 freeze --local > requirements.txt
+   ```
+3. Create a Procfile
+   ```
+   echo web: python app.py > Procfile
+   ```
+4. Setup the configuration variables in heroku, by: <br>
+   IP            = 0.0.0.0 <br>
+   PORT          = 5000 <br>
+   MONGO_URI     = mongo_db_uri <br>
+   SECRET_KEY    = your_secret_key <br>
+   MONGO_DBNAME  = your_database_name <br>
+
+5. Connect the GitHub repository to the project and allow for automatic deployment. 
 <br>
 <br>
+
+### Forking the GitHub Repository
+
+By forking the GitHub Repository we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original repository by using the following steps:
+
+1. At the top of the Repository, above the "Settings" Button on the menu, locate the "Fork" Button.
+2. You should now have a copy of the original repository in your GitHub account.
+   
 <br>
+<br>
+
+### Making a Local Clone
+
+1. Under the repository name, click "Clone or download".
+2. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
+3. Open Git Bash.
+4. Change the current working directory to the location where you want the cloned directory to be made.
+5. Type `git clone`, and then paste the URL you copied in Step 2.
+
+```
+git clone https://github.com/USERNAME/REPOSITORY
+```
 
 ## Credits
 
 <hr>
-- Hide Arrows From Input Number 
-https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
 
-- Adding Favicon
-  https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/
+- [Hide Arrows From Input Number](https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp)
+
+- [Adding Favicon](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/)
 
 ### Code
-
+- All content was written by the developer.
 ### Content
 
 - All content was written by the developer.
