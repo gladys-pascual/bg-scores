@@ -241,7 +241,7 @@ der>↩↩    <section>↩
 ```
 To solve, `<h2>` heading were added on `<section>` tags, with a class name of `sr-only` so it does not appear on the page and not change the current UI, but avoid the warning. 
 
-- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input)
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_uri)
 
 - remove white outline on header
 
