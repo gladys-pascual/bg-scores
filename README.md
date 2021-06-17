@@ -38,13 +38,12 @@ BG scores is a web application that allows user to record the boardgames that th
 
 - #### Typography and Colour Scheme
 
-  - In this project, [Materialize V1.0.0](https://materializecss.com/) was used to create a responsive front-end. The default typography was used, while [colour palette](https://materializecss.com/color.html) teal, with different shades, was used for the colour scheme.
+  - In this project, [Materialize V1.0.0](https://materializecss.com/) was used to create a responsive front-end. The default typography was used, while [colour palette](https://materializecss.com/color.html) teal, with different shades, were used for the colour scheme.
 
 - #### Logo
   - [Canva](https://www.canva.com/) was used to create a logo for bg-scores.
 - #### Favicon
-
-  -
+  - BG-scores favicon was used to allow the user to distinguish the tab when multiple tabs are open in their browser, which allows for a better user experience.
 
 - #### Animations
   - logo-bounce-animation: When there is a hover on the logo, logo-bounce-animation is applied to let the user know that the logo is a clickable link. The logo-bounce-animation adds some fun to the website.
@@ -57,6 +56,7 @@ BG scores is a web application that allows user to record the boardgames that th
 <br>
 
 ## Database architecture
+<hr>
 
 This project has four collections:
 
@@ -87,12 +87,26 @@ This project has four collections:
 
 
 2. boardgames
-   ` _id: ObjectId, boardgame: name of the boardgame as input by the user, in string creaetd_by: user, stored in the session cookie storage, string format `
+   
+   ``` 
+   _id: ObjectId, 
+   boardgame: name of the boardgame as input by the user, in string,
+   creaetd_by: user, stored in the session cookie storage, string format 
+   ```
 
 3. players
-   ` _id: ObjectId, player: name of the player as input by the user, in string creaetd_by: user, stored in the session cookie storage, string format `
+   ```
+   _id: ObjectId, 
+   player: name of the player as input by the user, in string, 
+   creaetd_by: user, stored in the session cookie storage, string format 
+   ```
+
 4. users
-   ` _id: ObjectId, username: string passsword: string (hash) `
+   ```
+   _id: ObjectId, 
+   username: string, 
+   passsword: string (hash) 
+   ```
 
 In this project, the boardgame and player name stored in the game collecttion is the corresponding id (in string format) from the ObjectId, rather than the name of the boardgame or player. This was implemented to ensure that if the player or boardgame name is edited, the correct name will be displayed to the user, as the id will always be the same. 
 
@@ -123,29 +137,39 @@ In this project, the boardgame and player name stored in the game collecttion is
 
 ### As a user, I want to be able to log out of my account.
 
-- In the header, the user is greated with Hi, `<username>`!. When hovered,the logout button will be available. Once the logout button is clicked, the data "user" stored in the session cookie will be removed and the user will be redirected to the login page.
+- In the header, the user is greated with Hi, `username`!. When hovered,the logout button will be available. Once the logout button is clicked, the data `user` stored in the session cookie will be removed and the user will be redirected to the login page.
 
 <br>
 
 ### As a user, I want to be able to record the games that I played, by:
 
-i) Adding a board game from a list of pre-added board games <br>
-ii) Seeing a list of all my board games <br>
-iii) Editing a name of a board game <br>
-iv) Deleting a board game <br>
+  i) Adding a board game from a list of pre-added board games <br>
+  ii) Seeing a list of all my board games <br>
+  iii) Editing a name of a board game <br>
+  iv) Deleting a board game <br>
 
-- In the homepage, a button labelled as "Add a Game" is available to allow the user to add their game details. Once the button is clicked, the user is
+- In the homepage, a button labelled as "Add a Game" is available to allow the user to add their game details. Once the button is clicked, the user is navigated to `/add_game` page where a form is available.
+- In this form, a the user can:
+  - Select a previously added boardgame from the dropdown
+  - Pick the date of the game
+  - Select players using the dropdown checklist
+  - Once the players are selected, an input field will be available beside the player's name wher the user can add their score
+  - All these information are required. The user will not be able to submit the form if an information is missing. The line below the input will turn red to let the user know that the information is missing. 
+  - Once submitted, the information in the form is inserted and stored in the games collection of the database, in a format discussed in the database architecture section above. Python functions were written to transform the data from what is given by the form inputs to the desired format.
+  - Finally, the user is redirected to `/get_games` where the user can see all the games recorded.
+  - In the games card, an edit and delete buttons are available.
+  - If the edit button is clicked, a similar to add_game form is used for editing the game, with the inputs pre-filled with the information previously filled.
+  - The add_game and edit_game forms have a "back to games" button on the top left corner to allow the user to go back in case the change their minds and does not want to add or edit the game. This allows for a better user experience.
+  - If the delete button is clicked, the user is asked if they are sure that they want to delete the game. The user can either pick "yes, delete the game", which will delete the game, or "no, don't delete the game", which will bring the user back to the game page without deleting the game.
 
 <br>
 
-### As a user, I want to be able to manage the board games in my account, by:
+### As a user, I want to be able to manage the boardgames in my account, by:
 
 i) Adding a board game <br>
 ii) Seeing a list of all my board games <br>
 iii) Editing a name of a board game <br>
 explain why there's no delete <br>
-
-<br>
 
 ### As a user, I want to be able to manage the players in my account, by:
 
@@ -154,6 +178,10 @@ ii) Seeing a list of all the players <br>
 iii) Editing a player's name <br>
 
 <br>
+
+- Adding a new boardgame and player has the same functionality as adding a game. Once submitted, a list of the previously added boardgames or players will be available in the `/get_boardgames` or `/get_players` page, and these boardgames and players will be available in the add / edit games form.
+- It has been decided that in this application, the user cannot delete the boardgame or player, and only able to delete it. This is to avoid having an error on the game collection if a boardgame or player is missing in the collection. 
+- Instead, the user can edit the boardgame or player. The boardgame and player name stored in the game collecttion is the corresponding id (in string format) from the ObjectId, rather than the name of the boardgame or player. This was implemented to ensure that if the player or boardgame name is edited, the correct name will be displayed to the user, as the id will always be the same. 
 
 ### Accessibility
 
@@ -260,8 +288,11 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
      <img src="./static/assets/no_boardgame.png" alt="no boardgame"/>
      <img src="./static/assets/no_player.png" alt="no player"/>
 
-5. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
+5. While step 4 was being tested, it was noticed that despite adding a boardgame and player, the `/get_boardgames` and `/get_players` page was not rendering the recently added players. It was found that an error in python code exists, where for games collection was being searched instead of the boardgames and players collection. This was rectified and tested, and was able to display the recently added boardgame and player.
 
+6. Error on the console about missing favicon. Favicon was added based on the information from this [link](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/).
+
+   
 ## Deployment
 
 <hr>
