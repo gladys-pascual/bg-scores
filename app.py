@@ -20,9 +20,10 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-
-# Function to transform from DB format of
-# players collection to ideal template
+### FUNCTIONS ###
+# Function to transform the format of the player collection
+# in the database to ideal format where the _id is converted to string
+# and player converted from player id to actual player name
 def mapPlayer(p):
     updated_player = {
         "_id": str(p["_id"]),
@@ -32,8 +33,9 @@ def mapPlayer(p):
     return updated_player
 
 
-# Function to transform from DB format of
-# boardgames collection to ideal template
+# Function to transform from format of the boardgame collection
+# in the database to an ideal format where the _id is converted to string
+# and boardgame converted from boardgame id to actual boardgame name
 def mapBoardgame(bg):
     updated_boardgame = {
         "_id": str(bg["_id"]),
@@ -48,9 +50,9 @@ def mapBoardgame(bg):
 def mapGame(game):
     players = list(mongo.db.players.find())
     boardgames = list(mongo.db.boardgames.find())
-    
+
     game["game_date"] = game["game_date"].strftime('%d %b %Y')
-    
+
     for bg in boardgames:
         if str(bg["_id"]) == game["boardgame"]:
             game["game_name"] = bg["boardgame"]
@@ -59,7 +61,7 @@ def mapGame(game):
         for bg_player in game["players_scores"]:
             if str(p["_id"]) == bg_player["player"]:
                 bg_player["player_name"] = p["player"]
-    
+
     return game
 
 
@@ -93,6 +95,22 @@ def mapSelectedPlayersScores(players, selected_players):
     return updated_selected_players
 
 
+# Function that creates the players_scores array
+# that will be added to the database
+def mapPlayersScores(players, scores):
+    players_scores = []
+    for i in range(len(scores)):
+        players_scores.append({
+            "player": players[i],
+            "score": scores[i],
+            "isWinner": max(scores) == scores[i]
+        })
+    return players_scores
+
+
+#############################################
+
+
 @app.route("/")
 @app.route("/get_games")
 def get_games():
@@ -103,16 +121,15 @@ def get_games():
 
         # Check if the user does not have a game yet
         user = session.get("user")
-        user_games = list(mongo.db.games.find({ "created_by": user }))
+        user_games = list(mongo.db.games.find({"created_by": user}))
         if len(user_games) == 0:
             return render_template("no_games.html")
 
         return render_template("games.html",
-                               games=map(mapGame, games), players=map(mapPlayer, players), 
+                               games=map(mapGame, games), players=map(mapPlayer, players),
                                boardgames=map(mapBoardgame, boardgames))
 
-    else:
-        return redirect(url_for("login"))
+    return redirect(url_for("login"))
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -143,7 +160,7 @@ def login():
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
-                existing_user["password"], request.form.get("password")):
+                    existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 return redirect(url_for("get_games"))
             else:
@@ -163,19 +180,6 @@ def logout():
     flash("You have been logged out.")
     session.pop("user")
     return redirect(url_for("login"))
-
-
-# Function that creates the players_scores array
-# that will be added to the database
-def mapPlayersScores(players, scores):
-    players_scores = []
-    for i in range(len(scores)):
-        players_scores.append({
-            "player": players[i],
-            "score": scores[i],
-            "isWinner": max(scores) == scores[i]
-        })
-    return players_scores
 
 
 @app.route("/add_game", methods=["GET", "POST"])
@@ -208,7 +212,6 @@ def add_game():
 def edit_game(game_id):
     if not session.get("user"):
         return redirect(url_for("login"))
-    
 
     if request.method == "POST":
         edit_game = {
@@ -219,8 +222,9 @@ def edit_game(game_id):
         edit_players = request.form.getlist("edit_p")
         edit_scores = request.form.getlist("edit_score")
         edit_scores_int = [int(score) for score in edit_scores]
-        edit_game['players_scores'] = mapPlayersScores(edit_players, edit_scores_int)
-        mongo.db.games.update({"_id": ObjectId(game_id)} ,edit_game)
+        edit_game['players_scores'] = mapPlayersScores(
+            edit_players, edit_scores_int)
+        mongo.db.games.update({"_id": ObjectId(game_id)}, edit_game)
         flash("Game was sucessfully edited!")
         return redirect(url_for("get_games"))
 
@@ -230,8 +234,8 @@ def edit_game(game_id):
     players = list(mongo.db.players.find().sort("player", 1))
     boardgames = list(mongo.db.boardgames.find().sort("boardgame", 1))
 
-    edit_game_creator= game["created_by"]
-    if session.get("user").lower()  !=   edit_game_creator.lower():
+    edit_game_creator = game["created_by"]
+    if session.get("user").lower() != edit_game_creator.lower():
         return render_template("no_access.html")
 
     return render_template("edit_game.html", game=game, game_date=game_date, edit_players_scores=mapSelectedPlayersScores(players, edit_players_scores),
@@ -244,8 +248,8 @@ def delete_game_confirmation(game_id):
         return redirect(url_for("login"))
 
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
-    delete_game_creator= game["created_by"]
-    if session.get("user").lower()  !=   delete_game_creator.lower():
+    delete_game_creator = game["created_by"]
+    if session.get("user").lower() != delete_game_creator.lower():
         return render_template("no_access.html")
     return render_template("delete_game_confirmation.html", game=game)
 
@@ -256,8 +260,8 @@ def delete_game(game_id):
         return redirect(url_for("login"))
 
     game = mongo.db.games.find_one({"_id": ObjectId(game_id)})
-    delete_game_creator= game["created_by"]
-    if session.get("user").lower()  !=   delete_game_creator.lower():
+    delete_game_creator = game["created_by"]
+    if session.get("user").lower() != delete_game_creator.lower():
         return render_template("no_access.html")
 
     mongo.db.games.remove({"_id": ObjectId(game_id)})
@@ -274,7 +278,7 @@ def get_boardgames():
 
     # Check if the user does not have a boardgame yet
     user = session.get("user")
-    user_boardgames = list(mongo.db.games.find({ "created_by": user }))
+    user_boardgames = list(mongo.db.boardgames.find({"created_by": user}))
     if len(user_boardgames) == 0:
         return render_template("no_boardgames.html")
 
@@ -312,8 +316,8 @@ def edit_boardgame(boardgame_id):
         return redirect(url_for("get_boardgames"))
 
     boardgame = mongo.db.boardgames.find_one({"_id": ObjectId(boardgame_id)})
-    edit_bg_creator= boardgame["created_by"]
-    if session.get("user").lower()  !=   edit_bg_creator.lower():
+    edit_bg_creator = boardgame["created_by"]
+    if session.get("user").lower() != edit_bg_creator.lower():
         return render_template("no_access.html")
 
     return render_template("edit_boardgame.html", boardgame=boardgame)
@@ -328,7 +332,7 @@ def get_players():
 
     # Check if the user does not have a player yet
     user = session.get("user")
-    user_players = list(mongo.db.games.find({ "created_by": user }))
+    user_players = list(mongo.db.players.find({"created_by": user}))
     if len(user_players) == 0:
         return render_template("no_players.html")
 
@@ -366,12 +370,12 @@ def edit_player(player_id):
         return redirect(url_for("get_players"))
 
     player = mongo.db.players.find_one({"_id": ObjectId(player_id)})
-    edit_player_creator= player["created_by"]
-    if session.get("user").lower()  !=   edit_player_creator.lower():
+    edit_player_creator = player["created_by"]
+    if session.get("user").lower() != edit_player_creator.lower():
         return render_template("no_access.html")
 
     return render_template("edit_player.html", player=player)
-    
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
