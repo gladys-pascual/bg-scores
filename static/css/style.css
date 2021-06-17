@@ -157,7 +157,7 @@ nav ul a:hover {
 
 /* Line 93 to 99 removes border after hover */
 a:-webkit-any-link:focus-visible {
-  outline-offset: none;
+  outline-offset: 0;
 }
 
 :focus-visible {
