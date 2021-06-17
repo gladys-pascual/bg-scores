@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <section class="add-game-wrapper">
+    <h2 class="sr-only">Add game</h2>
     <div id="add_game" class="card-panel">
       <form method="POST" action="{{ url_for('add_game') }}">
         <a href="{{ url_for('get_games') }}" id="back-to-games" class="black-text">

@@ -225,11 +225,25 @@ The following technologies have been used in this project:
 
 <hr>
 
-- remove white outline on header
+
 
 The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of the project to ensure there were no syntax errors in the project.
 
-[W3C Markup Validator](https://validator.w3.org/#validate_by_input)
+- [W3C Markup Validator](https://validator.w3.org/#validate_by_uri) <br>
+
+The warning below appeared:
+```
+Warning: Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections.
+
+From line 48, column 5; to line 48, column 13
+
+der>↩↩    <section>↩     
+```
+To solve, `<h2>` heading were added on `<section>` tags, with a class name of `sr-only` so it does not appear on the page and not change the current UI, but avoid the warning. 
+
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input)
+
+- remove white outline on header
 
 - ensure that only the details loaded by the user is rendered:
   - session user added
@@ -273,18 +287,23 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
    
    <br>
    Local version: <br>
-   - edit game: works <br>
-   - delete game: works <br>
-   - edit boardgame: works <br>
-   - edit player: works <br>
-    <br>
-  Deployed: <br>
-   - edit game: ? <br>
-   - delete game: ? <br>
-   - edit boardgame: ? <br>
-   - edit player: ? <br>
+   - edit game: working <br>
+   - delete game: working <br>
+   - edit boardgame: working <br>
+   - edit player: working 
+   - <br>
+     <br>
+    Deployed: <br>
+   - edit game: working <br>
+   - delete game: working <br>
+   - edit boardgame: working <br>
+   - edit player: working <br>
+<br>
+  
 
 3. Mostv `<i>` tags used for font awesome icons did not have a span with a class "sr-only" is added which describes the icons, where the "sr-only" class has a display:none in the stylesheet, which hides the text on screen, but allows for screenreader to be read. This was rectified.
+   
+<br>
 
 4. For a new user, there will initially be no game, boardgame or player present. The page was empty, which does not give a great user experience. Therefore, a card component was created to indicate that there is no game, boardgame or player for better user experience.
      <img src="./static/assets/no_game.png" alt="no game"/>
