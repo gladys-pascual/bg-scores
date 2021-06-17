@@ -16,8 +16,6 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-app.config['TRAP_HTTP_EXCEPTIONS']=True
-app.register_error_handler(Exception, defaultHandler)
 
 
 mongo = PyMongo(app)
