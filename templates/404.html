@@ -1,16 +1,22 @@
 {% extends "base.html" %} 
 {% block content %}
-  <main>
-    <div class="container">
-        <div class="row">
-            <div class="col s12 center-align">
-                <h1 class="error-heading">Error</h1>
-                <p class="error-p">404 - Page Not Found</p>
-                <p class="error-p">Please return to the homepage.</p>
-                <a class="waves-effect waves-light btn-large" href="{{ url_for('games') }}" id="home-btn">
-                    <i class="fas fa-home right"><span class="sr-only">home icon</span></i>Home</a>
-            </div>
-        </div>
+
+  <div class="no-access-wrapper">
+    <div class="no-access card-panel">
+      <h4 class="center no-access-title">
+        Sorry, the page cannot be found.
+        <i class="far fa-frown"><span class="sr-only">frown icon</span></i>
+      </h4>
+      <p class="go-back-home center">
+        Go back to the
+        <a href="{{ url_for('get_games') }}" class="teal-text no-access-link"
+          >homepage</a
+        >
+        <i class="fas fa-dice-d6 prefix">
+          <span class="sr-only">dice icon</span>
+        </i>
+      </p>
     </div>
-  </main>
+  </div>
+
 {% endblock %}

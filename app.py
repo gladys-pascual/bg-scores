@@ -379,13 +379,13 @@ def edit_player(player_id):
 
 # Handling error 404 and displaying relevant webpage
 @app.errorhandler(404)
-def page_not_found(error):
+def page_not_found(e):
     return render_template("404.html"), 404
 
 
 # 500 Error Page
 @app.errorhandler(500)
-def server_error(error):
+def server_error(e):
     return render_template("500.html"), 500
 
 

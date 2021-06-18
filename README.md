@@ -4,7 +4,7 @@
 
 BG scores is a web application that allows user to record the boardgames that they played, including the date of the game, the players and their scores. The application allows for the user to manage the list of boardgames and players in their account.
 
-<img src="" alt="BG-scores gif"/>
+<img src="./static/assets/bg-scores.gif" alt="BG-scores gif"/>
 
 <br/>
 <br/>
@@ -316,10 +316,7 @@ Since it came from the framework materialize css and not my css, I couldn't rect
 <br>
 
 
-3. In the edit game, URL has game_id. If this game_id is incorrect (random digits put by user), a 500 error is given and page doesn't handle it.
-  - Write a function that will handle 500 error
-  - Render html template
-  - Along with this, write a handler for 404 too
+3. Create an error handler for 500 and 404. This article, [Flask Error Handling](https://www.askpython.com/python-modules/flask/flask-error-handling), was followed.
 
 <br>
 
@@ -388,17 +385,14 @@ git clone https://github.com/USERNAME/REPOSITORY
 
 <hr>
 
-- [Hide Arrows From Input Number](https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp)
-
-- [Adding Favicon](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/)
-
 ### Code
-- All content was written by the developer.
+- [Hide Arrows From Input Number](https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp)
+- [Adding Favicon](https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/)
+- [Flask Error Handling](https://www.askpython.com/python-modules/flask/flask-error-handling)
+
 ### Content
 
 - All content was written by the developer.
-
-### Media
 
 ### Acknowledgements
 
